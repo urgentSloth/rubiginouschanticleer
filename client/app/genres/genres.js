@@ -5,15 +5,15 @@ angular.module( 'moviematch.genres', [] )
 	var getAllGenres = function () {
 		FetchGenres.getAllGenres()
 			.then(function(genres) {
-				console.log(genres);
+				console.log('geeennnrreessss', genres);
 				$scope.genres = genres;
 			})
-			.catch(funnction(err) {
+			.catch(function(err) {
 				console.error('EERRRRRRROOOORRRR', err);
 			});
 	};
 
-	// getAllGenres();
+	getAllGenres();
 
 	$scope.getGenre = function (genre) {
 		FetchGenres.getGenre(genre)

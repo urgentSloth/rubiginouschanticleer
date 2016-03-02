@@ -171,23 +171,23 @@ angular.module( 'moviematch.services', [] )
   return {
 
     getAllGenres: function () {
-      return $http.get('/api/genres/')
-      .then(function(res) {
-        return res.data;
-      },
-      function(err) {
-        console.error(err);
-      }); 
+      return $http.get('/api/genres')
+        .then(function(res) {
+          return res.data;
+        })
+        .catch(function(err) {
+          console.error(err);
+        }); 
     },
 
     getGenre: function (genre) {
-      return $http.get('/api/genre/' + genre)
-      .then( function(res) {
-        return res.data;
-      },
-      function(err) {
-        console.error(err);
-      }); 
+      return $http.get('/api/genre' + genre)
+        .then( function(res) {
+          return res.data;
+        })
+        .catch(function(err) {
+          console.error(err);
+        }); 
     }
 
   }

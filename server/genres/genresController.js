@@ -18,14 +18,16 @@ request('http://api.themoviedb.org/3/genre/movie/list?api_key=0705a8dd07324da673
 
 module.exports = {
 
-  getAllGenres: function() {
-  	Genre.findAll().then(function(genres) {
-  	  res.send(genres);
-  	});
+  getAllGenres: function(req, res) {
+  	Genre.findAll()
+	  	.then(function(genres) {
+	  	  res.send(genres);
+	  	});
   },
 
 
-  getGenre: function(genre) {
+  getGenre: function(req, res) {
+  	// genre = req.params.genre;
   	Genre.findOne({where: {genre: genre}})
   		.then(function(genre) {
   			res.json(genre);
