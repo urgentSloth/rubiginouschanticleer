@@ -2,7 +2,6 @@
 var usersController = require('../users/usersController.js');
 var genresController = require('../genres/genresController.js');
 var moviesController = require('../movies/moviesController.js');
-var prefsController = require('../prefs/prefsController.js');
 var sessionsController = require('../sessions/sessionsController.js');
 var votesController = require('../votes/votesController.js');
 var sessions_usersController = require('../sessions_users/sessions_usersController.js');
@@ -27,18 +26,14 @@ module.exports = function ( app, express ) {
   app.get('/api/movies/package/:number', moviesController.getMoviePackage );
   app.get('/api/movies/:movie_id', moviesController.getMovie );
 
-  /* PREFS */
-  app.get('/api/prefs', prefsController.getPrefs );
-  app.post('/api/prefs', prefsController.addPrefs );
-
   /* SESSIONS */
   app.get('/api/sessions', sessionsController.getAllSessions );
   app.post('/api/sessions', sessionsController.addSession );
 
   /* VOTES */
-  app.get('/api/votes', votesController.getAllVotes );
-  app.get('/api/votes/:session_id/:movie_id', votesController.getSessMovieVotes ); // get votes for a particular session and movie
   app.post('/api/votes', votesController.addVote );
+  app.get('/api/votes', votesController.tallyVotes );
+
 
   /* SESSIONS_USERS */
   app.get('/api/sessions/users/:sessionName', sessions_usersController.getUsersInOneSession );
@@ -46,9 +41,6 @@ module.exports = function ( app, express ) {
   app.get('/api/sessions/:session_id/:user_id', sessions_usersController.getSessionUserBySessionAndUser );
   app.post('/api/sessions/users', sessions_usersController.addOneUser );
 
-  /* MATCHING */
-  // This endpoint answers the question, 'For session <id>, do we currently have a match on movie <id>?'
-  app.get('/api/sessions/:session_id/match/:movie_id', votesController.checkMatch );
 
   // If a request is sent somewhere other than the routes above,
   // send it through our custom error handler

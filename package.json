@@ -75,7 +75,6 @@
     "karma-nyan-reporter": "^0.2.3",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-requirejs": "^0.2.5",
-    "karma-unicorn-reporter": "^0.1.4",
-    "nyan": "^1.0.3"
+    "karma-unicorn-reporter": "^0.1.4"
   }
 }

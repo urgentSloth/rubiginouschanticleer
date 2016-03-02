@@ -1,16 +1,16 @@
 var app = angular.module( 'moviematch', [
   'ngRoute',
   'moviematch.auth',
-  'moviematch.match',
-  'moviematch.prefs',
+  'moviematch.selected',
+  'moviematch.selectingOption',
   'moviematch.sessions',
   'moviematch.services',
-  'moviematch.showmatch',
   'moviematch.lobby',
   'moviematch.genres',
   'btford.socket-io',
   'moviematch.directive',
-  'moviematch.dstValidateUser'
+  'moviematch.dstValidateUser',
+  'timer'
   ])
 
 .config( function ( $routeProvider, $httpProvider ) {
@@ -27,9 +27,9 @@ var app = angular.module( 'moviematch', [
       templateUrl: 'app/auth/signout.html',
       controller: 'AuthController'
     })
-    .when( '/match', {
-      templateUrl: 'app/match/match.html',
-      controller: 'MatchController',
+    .when( '/selectingOption/:category', {
+      templateUrl: 'app/selectingOption/selectingOption.html',
+      controller: 'SelectingOptionController',
       authenticate: true
     })
     .when( '/genres', {
@@ -47,9 +47,9 @@ var app = angular.module( 'moviematch', [
       controller: 'LobbyController',
       authenticate: true
     })
-    .when( '/showmatch/:id', {
-      templateUrl: 'app/showmatch/showmatch.html',
-      controller: 'ShowmatchController',
+    .when( '/selected/:category/:id', {
+      templateUrl: 'app/selected/selected.html',
+      controller: 'SelectedController',
       authenticate: true
     })
     .otherwise({
