@@ -1,4 +1,5 @@
 var app = angular.module( 'moviematch', [
+  'ngRoute',
   'moviematch.auth',
   'moviematch.match',
   'moviematch.prefs',
@@ -6,7 +7,7 @@ var app = angular.module( 'moviematch', [
   'moviematch.services',
   'moviematch.showmatch',
   'moviematch.lobby',
-  'ngRoute',
+  'moviematch.genres',
   'btford.socket-io',
   'moviematch.directive',
   'moviematch.dstValidateUser'
@@ -29,6 +30,11 @@ var app = angular.module( 'moviematch', [
     .when( '/match', {
       templateUrl: 'app/match/match.html',
       controller: 'MatchController',
+      authenticate: true
+    })
+    .when( '/genres', {
+      templateUrl: 'app/genres/genres.html',
+      controller: 'GenresController',
       authenticate: true
     })
     .when( '/sessions', {

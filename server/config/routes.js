@@ -20,7 +20,7 @@ module.exports = function ( app, express ) {
 
   /* GENRES */
   app.get('/api/genres', genresController.getAllGenres );
-  app.get('/api/genres/:genre', genresController.getGenre );
+  app.get('/api/genre/:genre', genresController.getGenre );
 
   /* MOVIES */
   app.get('/api/movies', moviesController.getAllMovies );
