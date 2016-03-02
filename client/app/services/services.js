@@ -171,7 +171,7 @@ angular.module( 'moviematch.services', [] )
   return {
 
     getAllGenres: function () {
-      return $http.get('/api/genres')
+      return $http.get('/api/genres/')
         .then(function(res) {
           return res.data;
         })
@@ -181,7 +181,7 @@ angular.module( 'moviematch.services', [] )
     },
 
     getGenre: function (genre) {
-      return $http.get('/api/genre' + genre)
+      return $http.get('/api/genre/' + genre)
         .then( function(res) {
           return res.data;
         })

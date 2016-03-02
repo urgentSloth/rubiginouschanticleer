@@ -25,10 +25,9 @@ module.exports = {
 	  	});
   },
 
-
   getGenre: function(req, res) {
-  	// genre = req.params.genre;
-  	Genre.findOne({where: {genre: genre}})
+  	genre = req.params.genre;
+  	Genre.findOne({where: {genreName: genre}})
   		.then(function(genre) {
   			res.json(genre);
   		});

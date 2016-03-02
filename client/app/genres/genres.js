@@ -5,7 +5,6 @@ angular.module( 'moviematch.genres', [] )
 	var getAllGenres = function () {
 		FetchGenres.getAllGenres()
 			.then(function(genres) {
-				console.log('geeennnrreessss', genres);
 				$scope.genres = genres;
 			})
 			.catch(function(err) {
@@ -15,10 +14,13 @@ angular.module( 'moviematch.genres', [] )
 
 	getAllGenres();
 
-	$scope.getGenre = function (genre) {
+	var getGenre = function (genre) {
 		FetchGenres.getGenre(genre)
 			.then(function(genre) {
-				$scope.specificGenre = genre;
+				$scope.specificGenre = genre.genreName;
 			});
 	}
+
+	getGenre('Action');
+
 });
