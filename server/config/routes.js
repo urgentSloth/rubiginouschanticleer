@@ -19,8 +19,8 @@ module.exports = function ( app, express ) {
   app.post('/api/users/signout', usersController.signout );
 
   /* GENRES */
-  // app.get('/api/genres', genresController.getAllGenres );
-  // app.get('/api/genres/:genre', genresController.getGenre );
+  app.get('/api/genres', genresController.getAllGenres );
+  app.get('/api/genre/:genre', genresController.getGenre );
 
   /* MOVIES */
   app.get('/api/movies', moviesController.getAllMovies );
