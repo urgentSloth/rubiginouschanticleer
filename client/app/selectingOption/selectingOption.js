@@ -11,22 +11,18 @@ angular.module( 'moviematch.selectingOption', [] )
   });
 
   $scope.vote = function(option){
-    Votes.addVote($scope.session.sessionName, option.id, category);
+    Votes.addVote($scope.session.sessionName, option.id);
   };
 
   var tallyVotes = function(){
-   Votes.tallyVotes($scope.session.sessionName, category)
-    .then(function(winnerArr){
-      if( winnerArr.length === 1 ) { //when there's a winner
-        Session.setSelectedOption(winnerArr[0]);
-       $location.path('/selected');
-      } else { //when there's a tie
-        $scope.options = winnerArr;
-        //decrease amt of time to vote each time
-        seconds = Math.floor(seconds * .75);
-        setTimer(seconds);
-      }
-    });
+   var winnerArr = Votes.tallyVotes($scope.options);
+    if( winnerArr.length === 1 ) { //when there's a winner
+      Session.setSelectedOption(winnerArr[0]);
+     $location.path('/selected');
+    } else { //when there's a tie
+      $scope.options = winnerArr;
+      setTimer(seconds);
+    }
   }
 
   var setTimer = function(seconds){
@@ -48,7 +44,11 @@ angular.module( 'moviematch.selectingOption', [] )
   if(category === 'genre'){
     FetchGenres.getAllGenres()
       .then(function(data){
+        data.forEach(function(option){
+          option.votes = 0; 
+        });
         $scope.options = data;
+
       });
 
   } else {//GETTING FAKE MOVIE DATA --- take this out when we make real queries
@@ -56,6 +56,9 @@ angular.module( 'moviematch.selectingOption', [] )
     var fetchNextMovies = function( packageNumber, callback ){
       FetchMovies.getNext10Movies( packageNumber )
         .then( function( data ) {
+          data.forEach(function(option){
+            option.votes = 0; 
+          });
           $scope.options = data;
           callback(data);
         })
@@ -65,7 +68,10 @@ angular.module( 'moviematch.selectingOption', [] )
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('We just got a new vote!!! ', vote);
+    console.log('received vote', vote);
+    //update our array of options to reflect the new vote
+    $scope.options = Votes.receiveVote(vote.id, $scope.options);
+    console.log('received vote, new options', $scope.options);
   });
 
 
