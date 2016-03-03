@@ -13,6 +13,8 @@ request('http://api.themoviedb.org/3/genre/movie/list?api_key=0705a8dd07324da673
     	.catch(function(err) {
     	});
     });
+  } else {
+    console.error(error);
   }
 });
 
@@ -26,11 +28,25 @@ module.exports = {
   },
 
   getGenre: function(req, res) {
-  	genre = req.params.genre;
+  	var genre = req.params.genre;
   	Genre.findOne({where: {genreName: genre}})
   		.then(function(genre) {
   			res.json(genre);
   		});
+  },
+
+  getMoviesByGenre: function (req, res) {
+    var genreId = req.params.genreId;
+    var url = 'http://api.themoviedb.org/3/discover/movie?api_key=0705a8dd07324da673f8ab11366b85b6&with_genres=' + genreId + '&sort_by=popularity.desc';
+
+    request(url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var movies = JSON.parse(body).results;
+        res.send(movies);
+      } else {
+        console.error(error);
+      }
+    });
   }
 
 };

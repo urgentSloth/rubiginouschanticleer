@@ -1,7 +1,6 @@
 // require controllers here
 var usersController = require('../users/usersController.js');
 var genresController = require('../genres/genresController.js');
-var moviesController = require('../movies/moviesController.js');
 var sessionsController = require('../sessions/sessionsController.js');
 var sessions_usersController = require('../sessions_users/sessions_usersController.js');
 
@@ -21,7 +20,7 @@ module.exports = function ( app, express ) {
   app.get('/api/genre/:genre', genresController.getGenre );
 
   /* MOVIES */
-  // app.get('/api/movies/:genreId', moviesController.getMoviesByGenreId );
+  app.get('/api/movies/:genreId', genresController.getMoviesByGenre);
   // app.get('/api/movies/package/:number', moviesController.getMoviePackage );
   // app.get('/api/movies/:movie_id', moviesController.getMovie );
 
