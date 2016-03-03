@@ -7,7 +7,7 @@ request('http://api.themoviedb.org/3/genre/movie/list?api_key=0705a8dd07324da673
     var counter = 0;
     genres.forEach(function(genre) {
     	Genre.create({
-    		genreId: genre.id,
+    		id: genre.id,
     		genreName: genre.name
     	})
     	.catch(function(err) {

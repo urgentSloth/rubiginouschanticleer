@@ -36,7 +36,7 @@ angular.module( 'moviematch.services', [] )
       return $window.localStorage.getItem( 'username' );
     }
   } 
-} )
+})
 
 .factory( 'Session', function( $http, $window, $location ) {
   var selectedOption;
@@ -94,7 +94,7 @@ angular.module( 'moviematch.services', [] )
     }
 
   }
-} )
+})
 
 .factory( 'Socket', ['socketFactory', function(socketFactory){
   return socketFactory();
@@ -118,6 +118,7 @@ angular.module( 'moviematch.services', [] )
     },
 
     tallyVotes: function(options){
+      console.log('running for movies?', options);
       var winnerArr = [];
       var mostVotes = 0;
       options.forEach(function(option){
@@ -128,20 +129,16 @@ angular.module( 'moviematch.services', [] )
           mostVotes = option.votes;
         }
       });
-      
       //if the number of options didn't get smaller, remove one randomly 
       if( prevNumberOptions === winnerArr.length ){
         var index = Math.floor(Math.random() * winnerArr.length);
         winnerArr.splice(index, 1);
       }
-
       //update new number of options
       prevNumberOptions = winnerArr.length;
       return winnerArr;
     }
-
   }
-
 })
 
 .factory( 'Lobby', function( $http ) {
@@ -158,37 +155,17 @@ angular.module( 'moviematch.services', [] )
   }
 })
 
-.factory( 'FetchMovies', function( $http ) {
-  return {
-
-    getMovie: function( id ) {
-      return $http.get( '/api/movies/' + id )
-      .then( function( res ) {
-        return res.data;
-      },
-      function( err ) {
-        console.error( err );
-      });
-    },
-
-    getNext10Movies: function( packageNumber ) {
-      return $http.get( '/api/movies/package/' + packageNumber )
-      .then( function( res ) {
-        return res.data;
-      },
-      function( err ) {
-        console.error( err );
-      } );
-    }
-
-  };
-})
 .factory ('FetchMovies', function($http) {
+  var moviesArr;
   return {
+    getMoviesArr: function(){
+      return moviesArr;
+    }, 
 
     getMovies: function (genreId) {
       return $http.get('/api/movies/' + genreId)
         .then(function(res) {
+          moviesArr = res.data;
           return res.data;
         })
         .catch(function(err) {
@@ -197,6 +174,7 @@ angular.module( 'moviematch.services', [] )
     }
   }
 })
+
 .factory ('FetchGenres', function($http) {
   return {
 
@@ -219,6 +197,5 @@ angular.module( 'moviematch.services', [] )
           console.error(err);
         }); 
     }
-
   };
 });

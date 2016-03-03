@@ -44,7 +44,7 @@ angular.module( 'moviematch.selectingOption', [] )
   
   setTimer(seconds);
 
-  if(category === 'genre'){
+  if(category === 'genre'){//fetching genres 
     FetchGenres.getAllGenres()
       .then(function(data){
         data.forEach(function(option){
@@ -54,23 +54,17 @@ angular.module( 'moviematch.selectingOption', [] )
 
       });
 
-  } else {//GETTING FAKE MOVIE DATA --- take this out when we make real queries
- 
-    var fetchNextMovies = function( packageNumber, callback ){
-      FetchMovies.getNext10Movies( packageNumber )
-        .then( function( data ) {
-          data.forEach(function(option){
-            option.votes = 0; 
-          });
-          $scope.options = data;
-          callback(data);
-        })
-    };
-    fetchNextMovies(0, function(data){console.log('');});
+  } else {//fetching movies is synchronous because we already made the api call 
+    var data = FetchMovies.getMoviesArr();
+    data.forEach(function(option){
+        option.votes = 0; 
+    });
+    $scope.options = data;
   }
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
+    console.log('added da vote!', vote);
     //update our array of options to reflect the new vote
     $scope.options = Votes.receiveVote(vote.id, $scope.options);
   });
