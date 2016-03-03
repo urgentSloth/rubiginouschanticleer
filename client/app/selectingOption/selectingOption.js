@@ -1,33 +1,52 @@
 angular.module( 'moviematch.selectingOption', [] )
 
 .controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout ) {
-  
+
+  var category = $routeParams.category;
+  var seconds = 5;
+
+  Session.getSession()
+  .then( function( session ) {
+    $scope.session = session;
+  });
+
+  $scope.vote = function(option){
+    Votes.addVote($scope.session.sessionName, option.id, category);
+  };
+
+  var tallyVotes = function(){
+   Votes.tallyVotes($scope.session.sessionName, category)
+    .then(function(winnerArr){
+      if( winnerArr.length === 1 ) { //when there's a winner
+        Session.setSelectedOption(winnerArr[0]);
+       $location.path('/selected');
+      } else { //when there's a tie
+        $scope.options = winnerArr;
+        //decrease amt of time to vote each time
+        seconds = Math.floor(seconds * .75);
+        setTimer(seconds);
+      }
+    });
+  }
+
   var setTimer = function(seconds){
     $scope.counter = seconds;
     $scope.timer = function(seconds){
       var countdown = $timeout($scope.timer,1000);
       $scope.counter -= 1;
       if( $scope.counter === 0 ){
+        //when the timer reaches zero, make it stop
         $timeout.cancel(countdown);
+        tallyVotes();
       }
     }
     $scope.timer();
   };
+  
+  setTimer(seconds);
 
-  setTimer(10);
-
-  //get the current session
-  Session.getSession()
-  .then( function( session ) {
-    $scope.session = session;
-  });
-
-  //get the category you're voting on, movie or genre
-  var category = $routeParams.category;
-   
-  //**********************
+  //******* INTIIALIZATION ********
   //GETTING FAKE MOVIE DATA --- take this out when we make real queries
-  //we will make a request for genre data or movie data eventually something like:
   //$scope.data = Vote.getOptions(category); 
   var fetchNextMovies = function( packageNumber, callback ){
     FetchMovies.getNext10Movies( packageNumber )
@@ -38,12 +57,6 @@ angular.module( 'moviematch.selectingOption', [] )
   };
   fetchNextMovies(0, function(data){console.log('fake data received');});
   //GETTING FAKE MOVIE DATA 
-  //********************************
-
-  $scope.vote = function(option){
-    //we need the sessionName, the option's id, and the option's category to record the vote in the db, then emit the vote to the other users
-    Votes.addVote($scope.session.sessionName, option.id, category);
-  }
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {

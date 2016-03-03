@@ -39,7 +39,18 @@ angular.module( 'moviematch.services', [] )
 } )
 
 .factory( 'Session', function( $http, $window, $location ) {
+  var selectedOption;
   return {
+    getSelectedOption: function(){
+      console.log('selectedOption!!',selectedOption);
+      return selectedOption;
+    },
+
+    setSelectedOption: function(option){
+      
+      selectedOption = option;
+    },
+
     createSession: function( sessionName, callback ) {
       return $http.post( '/api/sessions', { sessionName: sessionName } )
       .then( function( response ) {
@@ -105,10 +116,17 @@ angular.module( 'moviematch.services', [] )
      }, function( err ) {
           console.error( err );
      });
-    }
+    },
 
+    tallyVotes: function(sessionName, category){
+     return $http.get( '/api/votes/'+category +'/'+ sessionName )
+     .then( function(resp) {
+        return resp.data;
+      });
+    }
   }
-} )
+
+})
 
 .factory( 'Lobby', function( $http ) {
   return {

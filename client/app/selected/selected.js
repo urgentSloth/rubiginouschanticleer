@@ -1,5 +1,5 @@
 angular.module( 'moviematch.selected', [] )
 
-.controller( 'SelectedController', function( $scope, Session, Socket, $location, Auth ) {
-
+.controller( 'SelectedController', function( $scope, Session, Socket, $location, Auth) {
+  $scope.selectedOption = Session.getSelectedOption();
 })

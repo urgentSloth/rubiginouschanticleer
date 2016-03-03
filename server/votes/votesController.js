@@ -27,9 +27,29 @@ var addVote = function( req, res ) {
   })
 };
 
-//tally up votes, return winner (a movie or a genre), or the tie data
+//return winnerArr array of options that tied, or an arr with a single option
 var tallyVotes = function( req, res, next ) {
+  var category = req.params.category;
+  var sessionName = req.params.sessionName;
+  var voteType = 
+  Vote.findAll({ where: { //check if voteEntry exists
+      sessionName: sessionName,
+      category: category
+    }})
+  .then( function(optionsArr) {
+    var winnerArr = [];
+    var mostVotes = 0;
 
+    optionsArr.forEach(function(option){
+      if(option.votes === mostVotes){
+        winnerArr.push(option);
+      } else if (option.votes > mostVotes){
+        winnerArr = [option];
+        mostVotes =  option.votes;
+      }
+    });
+    res.json(winnerArr);
+  });
 }
 
 module.exports = {

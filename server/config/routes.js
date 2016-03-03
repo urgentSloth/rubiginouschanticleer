@@ -32,7 +32,7 @@ module.exports = function ( app, express ) {
 
   /* VOTES */
   app.post('/api/votes', votesController.addVote );
-  app.get('/api/votes', votesController.tallyVotes );
+  app.get('/api/votes/:category/:sessionName', votesController.tallyVotes );
 
   /* SESSIONS_USERS */
   app.get('/api/sessions/users/:sessionName', sessions_usersController.getUsersInOneSession );
