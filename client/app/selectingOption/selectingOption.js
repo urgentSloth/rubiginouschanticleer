@@ -1,6 +1,6 @@
 angular.module( 'moviematch.selectingOption', [] )
 
-.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout ) {
+.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout, FetchGenres ) {
 
   var category = $routeParams.category;
   var seconds = 5;
@@ -45,18 +45,23 @@ angular.module( 'moviematch.selectingOption', [] )
   
   setTimer(seconds);
 
-  //******* INTIIALIZATION ********
-  //GETTING FAKE MOVIE DATA --- take this out when we make real queries
-  //$scope.data = Vote.getOptions(category); 
-  var fetchNextMovies = function( packageNumber, callback ){
-    FetchMovies.getNext10Movies( packageNumber )
-      .then( function( data ) {
+  if(category === 'genre'){
+    FetchGenres.getAllGenres()
+      .then(function(data){
         $scope.options = data;
-        callback(data);
-      })
-  };
-  fetchNextMovies(0, function(data){console.log('fake data received');});
-  //GETTING FAKE MOVIE DATA 
+      });
+
+  } else {//GETTING FAKE MOVIE DATA --- take this out when we make real queries
+ 
+    var fetchNextMovies = function( packageNumber, callback ){
+      FetchMovies.getNext10Movies( packageNumber )
+        .then( function( data ) {
+          $scope.options = data;
+          callback(data);
+        })
+    };
+    fetchNextMovies(0, function(data){console.log('fake data received');});
+  }
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {

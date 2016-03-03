@@ -2,9 +2,10 @@ var db = require( '../config/db' );
 var Sequelize = require( 'sequelize' );
 
 var Genre = db.define( 'genres', {
-	genreId : {
+	id : {
 		type: Sequelize.INTEGER,
-		unique: true
+		unique: true,
+		primaryKey: true
 	},
 	genreName : {
 		type: Sequelize.STRING,

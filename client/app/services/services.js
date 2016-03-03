@@ -47,7 +47,7 @@ angular.module( 'moviematch.services', [] )
     },
 
     setSelectedOption: function(option){
-      
+      console.log('just set da option', option);
       selectedOption = option;
     },
 
