@@ -42,12 +42,10 @@ angular.module( 'moviematch.services', [] )
   var selectedOption;
   return {
     getSelectedOption: function(){
-      console.log('selectedOption!!',selectedOption);
       return selectedOption;
     },
 
     setSelectedOption: function(option){
-      console.log('just set da option', option);
       selectedOption = option;
     },
 
@@ -103,6 +101,7 @@ angular.module( 'moviematch.services', [] )
 }])
 
 .factory( 'Votes', function( $http, $location, Socket ) {
+  var prevNumberOptions; 
   return {
     addVote: function(sessionName, id){
       voteData = {sessionName: sessionName, id: id};
@@ -118,7 +117,7 @@ angular.module( 'moviematch.services', [] )
       return options;
     },
 
-    tallyVotes: function(options, tiedBefore){
+    tallyVotes: function(options){
       var winnerArr = [];
       var mostVotes = 0;
       options.forEach(function(option){
@@ -129,8 +128,15 @@ angular.module( 'moviematch.services', [] )
           mostVotes = option.votes;
         }
       });
-      //handleTie(winnerArr);
-      console.log('winnerArr?????', winnerArr);
+      
+      //if the number of options didn't get smaller, remove one randomly 
+      if( prevNumberOptions === winnerArr.length ){
+        var index = Math.floor(Math.random() * winnerArr.length);
+        winnerArr.splice(index, 1);
+      }
+
+      //update new number of options
+      prevNumberOptions = winnerArr.length;
       return winnerArr;
     }
 

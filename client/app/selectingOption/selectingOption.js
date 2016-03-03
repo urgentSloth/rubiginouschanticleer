@@ -21,6 +21,7 @@ angular.module( 'moviematch.selectingOption', [] )
      $location.path('/selected/'+category);
     } else { //when there's a tie
       $scope.options = winnerArr;
+      //if tie twice in a row, we want to remove an option
       setTimer(seconds);
     }
   }
@@ -63,15 +64,13 @@ angular.module( 'moviematch.selectingOption', [] )
           callback(data);
         })
     };
-    fetchNextMovies(0, function(data){console.log('fake data received');});
+    fetchNextMovies(0, function(data){console.log('');});
   }
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('received vote', vote);
     //update our array of options to reflect the new vote
     $scope.options = Votes.receiveVote(vote.id, $scope.options);
-    console.log('received vote, new options', $scope.options);
   });
 
 
