@@ -1,42 +1,13 @@
-<div id='signin'>
-    <div data-wrapper-for="Grid1" class="container-fluid">
-        <div class="row">
-          <form name="signinForm" ng-submit='signin()' novalidate>
-            <div class="col-xs-12">
-                <h1>
-                    Sign in
-                </h1>
-            </div>
-            <div class="col-xs-5">
-                <h4>
-                    Username:
-                </h4>
-            </div>
-            <div class="col-xs-7">
-                <input type="text" value="" placeholder="Enter Username" class="form-control" name="userInput" ng-model='user.username' ng-class="{ 'error': signinForm.userInput.$invalid && signinForm.$dirty }" required>
-            </div>
-            <div class="col-xs-5">
-                <h4>
-                    Password:
-                </h4>
-            </div>
-            <div class="col-xs-7">
-                <input type="password" value="" placeholder="Enter Password" class="form-control" name="pwdInput" ng-model='user.password' ng-class="{ 'error': signinForm.pwdInput.$invalid && signinForm.$dirty }" required>
-            </div>
-            <div class="error-msg" ng-show="error.signinError">
-                {{ error.signinError }}
-            </div>
-            <div class="col-xs-12">
-                <button class="btn btn-success" type="submit" ng-disabled="signinForm.$invalid">
-                    Sign in
-                </button>
-            </div>
-          </form>
-            <div class="col-xs-12">
-              <a href="#/signup">
-                  New User? <strong>Signup</strong>
-              </a>
-            </div>
-        </div>
-    </div>
-</div>
+ <div class="container">
+  <form class="form-signin" ng-submit='signin()' novalidate>
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Username" ng-model='user.username' ng-class="{ 'error': signinForm.userInput.$invalid && signinForm.$dirty }" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model='user.password' ng-class="{ 'error': signinForm.pwdInput.$invalid && signinForm.$dirty }" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="signinForm.$invalid">Sign in</button>
+    <a class="btn btn-lg btn-primary btn-block" href="#/signup">
+        Don't have an account?
+    </a>
+  </form>
+</div> <!-- /container -->
+

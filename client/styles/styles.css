@@ -1,3 +1,12 @@
+body {
+  width: 100%;
+  height: 100%;
+  background-image: url('http://i.dailymail.co.uk/i/pix/2016/01/26/11/3095AF9200000578-3417195-image-a-31_1453809262606.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/*
 button:disabled {
   color: lightgrey;
 }
@@ -123,3 +132,4 @@ hr {
   margin: 0 auto;
   width: 100%;
 }
+*/
