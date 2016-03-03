@@ -1,39 +1,78 @@
 angular.module( 'moviematch.selectingOption', [] )
 
-.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies ) {
-  
-  //get the current session
+
+.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout, FetchGenres ) {
+
+  var category = $routeParams.category;
+  var seconds = 5;
+
   Session.getSession()
   .then( function( session ) {
     $scope.session = session;
   });
 
-  //get the category you're voting on, movie or genre
-  var category = $routeParams.category;
-   
-  //**********************
-  //GETTING FAKE MOVIE DATA --- take this out when we make real queries
-  //we will make a request for genre data or movie data eventually something like:
-  //$scope.data = Vote.getOptions(category); 
-  var fetchNextMovies = function( packageNumber, callback ){
-    FetchMovies.getNext10Movies( packageNumber )
-      .then( function( data ) {
-        $scope.options = data;
-        callback(data);
-      })
-  };
-  fetchNextMovies(0, function(data){console.log('fake data received');});
-  //GETTING FAKE MOVIE DATA 
-  //********************************
 
   $scope.vote = function(option){
-    //we need the sessionName, the option's id, and the option's category to record the vote in the db, then emit the vote to the other users
-    Votes.addVote($scope.session.sessionName, option.id, category);
+    Votes.addVote($scope.session.sessionName, option.id);
+  };
+
+  var tallyVotes = function(){
+   var winnerArr = Votes.tallyVotes($scope.options);
+    if( winnerArr.length === 1 ) { //when there's a winner
+      Session.setSelectedOption(winnerArr[0]);
+     $location.path('/selected/'+category);
+    } else { //when there's a tie
+      $scope.options = winnerArr;
+      //if tie twice in a row, we want to remove an option
+      setTimer(seconds);
+    }
+  }
+
+  var setTimer = function(seconds){
+    $scope.counter = seconds;
+    $scope.timer = function(seconds){
+      var countdown = $timeout($scope.timer,1000);
+      $scope.counter -= 1;
+      if( $scope.counter === 0 ){
+        //when the timer reaches zero, make it stop
+        $timeout.cancel(countdown);
+        tallyVotes();
+      }
+    }
+    $scope.timer();
+  };
+  
+  setTimer(seconds);
+
+  if(category === 'genre'){
+    FetchGenres.getAllGenres()
+      .then(function(data){
+        data.forEach(function(option){
+          option.votes = 0; 
+        });
+        $scope.options = data;
+
+      });
+
+  } else {//GETTING FAKE MOVIE DATA --- take this out when we make real queries
+ 
+    var fetchNextMovies = function( packageNumber, callback ){
+      FetchMovies.getNext10Movies( packageNumber )
+        .then( function( data ) {
+          data.forEach(function(option){
+            option.votes = 0; 
+          });
+          $scope.options = data;
+          callback(data);
+        })
+    };
+    fetchNextMovies(0, function(data){console.log('');});
   }
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('We just got a new vote!!! ', vote);
+    //update our array of options to reflect the new vote
+    $scope.options = Votes.receiveVote(vote.id, $scope.options);
   });
 
 

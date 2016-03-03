@@ -9,9 +9,8 @@ var app = angular.module( 'moviematch', [
   'moviematch.genres',
   'btford.socket-io',
   'moviematch.directive',
-  'moviematch.dstValidateUser',
-  'timer'
-  ])
+  'moviematch.dstValidateUser'
+    ])
 
 .config( function ( $routeProvider, $httpProvider ) {
   $routeProvider
@@ -47,7 +46,8 @@ var app = angular.module( 'moviematch', [
       controller: 'LobbyController',
       authenticate: true
     })
-    .when( '/selected/:category/:id', {
+
+    .when( '/selected/:category', {
       templateUrl: 'app/selected/selected.html',
       controller: 'SelectedController',
       authenticate: true
