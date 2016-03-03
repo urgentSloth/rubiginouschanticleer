@@ -1,7 +1,21 @@
 angular.module( 'moviematch.selectingOption', [] )
 
-.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies ) {
+.controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout ) {
   
+  var setTimer = function(seconds){
+    $scope.counter = seconds;
+    $scope.timer = function(seconds){
+      var countdown = $timeout($scope.timer,1000);
+      $scope.counter -= 1;
+      if( $scope.counter === 0 ){
+        $timeout.cancel(countdown);
+      }
+    }
+    $scope.timer();
+  };
+
+  setTimer(10);
+
   //get the current session
   Session.getSession()
   .then( function( session ) {
