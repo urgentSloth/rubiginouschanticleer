@@ -21,7 +21,7 @@ module.exports = {
   getAllGenres: function(req, res) {
   	Genre.findAll()
 	  	.then(function(genres) {
-	  	  res.send(genres);
+        res.send(genres);
 	  	});
   },
 

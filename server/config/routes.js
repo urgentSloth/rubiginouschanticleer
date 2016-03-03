@@ -21,9 +21,9 @@ module.exports = function ( app, express ) {
   app.get('/api/genre/:genre', genresController.getGenre );
 
   /* MOVIES */
-  app.get('/api/movies', moviesController.getAllMovies );
-  app.get('/api/movies/package/:number', moviesController.getMoviePackage );
-  app.get('/api/movies/:movie_id', moviesController.getMovie );
+  // app.get('/api/movies/:genreId', moviesController.getMoviesByGenreId );
+  // app.get('/api/movies/package/:number', moviesController.getMoviePackage );
+  // app.get('/api/movies/:movie_id', moviesController.getMovie );
 
   /* SESSIONS */
   app.get('/api/sessions', sessionsController.getAllSessions );
