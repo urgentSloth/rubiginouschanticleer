@@ -41,7 +41,7 @@ io.on( 'connect' , function( socket ){
   // This listener handles broadcasting a vote to connected clients.
   socket.on( 'vote', function( voteData ) {
     socket.join( voteData.sessionName );
-    io.to( voteData.sessionName ).emit( 'voteAdded', voteData.data );
+    io.to( voteData.sessionName ).emit( 'voteAdded', voteData );
   });
 });
 

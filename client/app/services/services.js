@@ -39,7 +39,16 @@ angular.module( 'moviematch.services', [] )
 } )
 
 .factory( 'Session', function( $http, $window, $location ) {
+  var selectedOption;
   return {
+    getSelectedOption: function(){
+      return selectedOption;
+    },
+
+    setSelectedOption: function(option){
+      selectedOption = option;
+    },
+
     createSession: function( sessionName, callback ) {
       return $http.post( '/api/sessions', { sessionName: sessionName } )
       .then( function( response ) {
@@ -92,23 +101,48 @@ angular.module( 'moviematch.services', [] )
 }])
 
 .factory( 'Votes', function( $http, $location, Socket ) {
+  var prevNumberOptions; 
   return {
-    addVote: function(sessionName, optionId, category){
-      var voteData = {
-        sessionName: sessionName, 
-        optionId: optionId, 
-        category: category
-      };
-     return $http.post( '/api/votes', voteData)
-     .then( function(voteData) {
-       return Socket.emit( 'vote', voteData );
-     }, function( err ) {
-          console.error( err );
-     });
+    addVote: function(sessionName, id){
+      voteData = {sessionName: sessionName, id: id};
+      Socket.emit( 'vote', voteData );
+    },
+
+    receiveVote: function(id, options){
+      for(var i = 0; i < options.length; i ++){
+        if(options[i].id === id){
+          options[i].votes += 1;
+        }
+      }
+      return options;
+    },
+
+    tallyVotes: function(options){
+      var winnerArr = [];
+      var mostVotes = 0;
+      options.forEach(function(option){
+        if(option.votes === mostVotes){
+          winnerArr.push(option);
+        } else if(option.votes > mostVotes){
+          winnerArr = [option];
+          mostVotes = option.votes;
+        }
+      });
+      
+      //if the number of options didn't get smaller, remove one randomly 
+      if( prevNumberOptions === winnerArr.length ){
+        var index = Math.floor(Math.random() * winnerArr.length);
+        winnerArr.splice(index, 1);
+      }
+
+      //update new number of options
+      prevNumberOptions = winnerArr.length;
+      return winnerArr;
     }
 
   }
-} )
+
+})
 
 .factory( 'Lobby', function( $http ) {
   return {
