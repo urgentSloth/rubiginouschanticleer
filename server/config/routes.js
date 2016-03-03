@@ -3,7 +3,6 @@ var usersController = require('../users/usersController.js');
 var genresController = require('../genres/genresController.js');
 var moviesController = require('../movies/moviesController.js');
 var sessionsController = require('../sessions/sessionsController.js');
-var votesController = require('../votes/votesController.js');
 var sessions_usersController = require('../sessions_users/sessions_usersController.js');
 
 var helpers = require('./helpers.js'); // our custom middleware
@@ -29,10 +28,6 @@ module.exports = function ( app, express ) {
   /* SESSIONS */
   app.get('/api/sessions', sessionsController.getAllSessions );
   app.post('/api/sessions', sessionsController.addSession );
-
-  /* VOTES */
-  app.post('/api/votes', votesController.addVote );
-  app.get('/api/votes/:category/:sessionName', votesController.tallyVotes );
 
   /* SESSIONS_USERS */
   app.get('/api/sessions/users/:sessionName', sessions_usersController.getUsersInOneSession );

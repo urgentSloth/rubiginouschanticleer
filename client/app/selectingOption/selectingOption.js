@@ -18,7 +18,7 @@ angular.module( 'moviematch.selectingOption', [] )
    var winnerArr = Votes.tallyVotes($scope.options);
     if( winnerArr.length === 1 ) { //when there's a winner
       Session.setSelectedOption(winnerArr[0]);
-     $location.path('/selected');
+     $location.path('/selected/'+category);
     } else { //when there's a tie
       $scope.options = winnerArr;
       setTimer(seconds);

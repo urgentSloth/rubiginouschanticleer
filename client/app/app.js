@@ -46,7 +46,7 @@ var app = angular.module( 'moviematch', [
       controller: 'LobbyController',
       authenticate: true
     })
-    .when( '/selected', {
+    .when( '/selected/:category', {
       templateUrl: 'app/selected/selected.html',
       controller: 'SelectedController',
       authenticate: true
