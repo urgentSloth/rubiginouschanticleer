@@ -34,7 +34,6 @@ module.exports = function ( app, express ) {
   app.post('/api/votes', votesController.addVote );
   app.get('/api/votes', votesController.tallyVotes );
 
-
   /* SESSIONS_USERS */
   app.get('/api/sessions/users/:sessionName', sessions_usersController.getUsersInOneSession );
   app.get('/api/sessions/:sessionName', sessionsController.getSessionByName );
