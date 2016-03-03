@@ -147,29 +147,30 @@ angular.module( 'moviematch.services', [] )
       } );
     }
 
-  }
-  .factory ('FetchGenres', function($http) {
-    return {
+  };
+})
+.factory ('FetchGenres', function($http) {
+  return {
 
-      getAllGenres: function () {
-        return $http.get('/api/genres/')
-          .then(function(res) {
-            return res.data;
-          })
-          .catch(function(err) {
-            console.error(err);
-          }); 
-      },
+    getAllGenres: function () {
+      return $http.get('/api/genres/')
+        .then(function(res) {
+          return res.data;
+        })
+        .catch(function(err) {
+          console.error(err);
+        }); 
+    },
 
-      getGenre: function (genre) {
-        return $http.get('/api/genre/' + genre)
-          .then( function(res) {
-            return res.data;
-          })
-          .catch(function(err) {
-            console.error(err);
-          }); 
-      }
-
+    getGenre: function (genre) {
+      return $http.get('/api/genre/' + genre)
+        .then( function(res) {
+          return res.data;
+        })
+        .catch(function(err) {
+          console.error(err);
+        }); 
     }
-  })
+
+  };
+});
