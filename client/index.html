@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html ng-app='moviematch'>
   <head>
-    <meta charset="utf-8" />
-    <title>MovieMatch | No More Bickering</title>
-    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+
+    <title>MovieMatch</title>
+
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap_flatly.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="styles/newStyles.css" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" type="text/css" href="styles/bootstrap_flatly.css" /> -->
   </head>
   <body>
     <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
-    <dst-main-nav></dst-main-nav>
+    <!-- <dst-main-nav></dst-main-nav> -->
     <div ng-view></div>
 
     <script src="lib/angular/angular.js"></script>
@@ -25,6 +36,7 @@
     <script src="app/selected/selected.js"></script>
     <script src="app/services/services.js"></script>
     <script src="app/genres/genres.js"></script>
+    <script src="app/movies/movies.js"></script>
     <script src="app/directives/dst_main_nav.js"></script>
     <script src="app/directives/dstValidateUser.js"></script>
     <script src="app/app.js"></script>
