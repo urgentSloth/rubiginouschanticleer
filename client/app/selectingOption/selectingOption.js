@@ -6,16 +6,15 @@ angular.module( 'moviematch.selectingOption', [] )
   Session.getSession()
   .then( function( session ) {
     $scope.session = session;
-
   });
 
   //get the category you're voting on, movie or genre
   var category = $routeParams.category;
-
-  //we will make a request for genre data or movie data
-  //$scope.data = Vote.getOptions(category);    
-
-  //GETTING FAKE MOVIE DATA
+   
+  //**********************
+  //GETTING FAKE MOVIE DATA --- take this out when we make real queries
+  //we will make a request for genre data or movie data eventually something like:
+  //$scope.data = Vote.getOptions(category); 
   var fetchNextMovies = function( packageNumber, callback ){
     FetchMovies.getNext10Movies( packageNumber )
       .then( function( data ) {
@@ -23,19 +22,18 @@ angular.module( 'moviematch.selectingOption', [] )
         callback(data);
       })
   };
-  fetchNextMovies(0, function(data){console.log('data received');});
-  //GETTING FAKE MOVIE DATA
-
-
+  fetchNextMovies(0, function(data){console.log('fake data received');});
+  //GETTING FAKE MOVIE DATA 
+  //********************************
 
   $scope.vote = function(option){
     //we need the sessionName, the option's id, and the option's category to record the vote in the db, then emit the vote to the other users
-    console.log('sessionName?', $scope.session.sessionName)
     Votes.addVote($scope.session.sessionName, option.id, category);
   }
 
+  //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('We just got a new vote: ', vote);
+    console.log('We just got a new vote!!! ', vote);
   });
 
 

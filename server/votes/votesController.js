@@ -7,41 +7,29 @@ var User = require( '../users/users' );
 
 var addVote = function( req, res ) {
   var voteData = req.body;
-  // //NEED TO UPDATE VOTES DB WITH THE VOTE DATA
-  // ///example **********
-  // Project.find({ where: {sessionName: voteData.sessionName} }).on('success', function(ses) {
-  //   if (project) { // if the record exists in the db
-  //     project.update({
-  //       title: 'a very different title now'
-  //     }).success(function() {});
-  //   }
-  // })
-  // ///example **********
-
-  res.json(voteData);
+  Vote.find({ where: { //check if voteEntry exists
+      sessionName: voteData.sessionName,
+      optionId: voteData.optionId,
+      category: voteData.category
+    } })
+.then( function(voteEntry) {
+    if (voteEntry) { // if it exists, add a one vote to it
+      Vote.addOneVote(voteEntry)
+      .then(function(data) {
+        res.json(data);
+      });
+    } else { // if not create a new vote entry 
+      Vote.createVoteEntry(voteData)
+      .then(function(data) {
+        res.json(data);
+      });
+    }
+  })
 };
-
 
 //tally up votes, return winner (a movie or a genre), or the tie data
 var tallyVotes = function( req, res, next ) {
-  // //if choosing genre, set category to genre
-  // //if not, movie
-  // if(req.body.category === 'genre'){
-  //   var category = 'genre'
-  // } else {
-  //   var category = 'movie'
-  // }
-  // // get vote data
-  // Vote.getSessVotes( sessionID, movieID, category )
-  // .then( function( voteData ) {
-  //   // check if votedata is an array --> question for matchme team, when would it not be an array????
-  //   if( Array.isArray( voteData ) ) {
-  //     // if so, tally up votes
 
-  //   } else { 
-  //     res.json( false );
-  //   } 
-  // } );
 }
 
 module.exports = {

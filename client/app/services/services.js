@@ -99,7 +99,7 @@ angular.module( 'moviematch.services', [] )
         optionId: optionId, 
         category: category
       };
-     return $http.post( '/api/votes/', voteData)
+     return $http.post( '/api/votes', voteData)
      .then( function(voteData) {
        return Socket.emit( 'vote', voteData );
      }, function( err ) {
