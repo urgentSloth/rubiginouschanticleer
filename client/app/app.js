@@ -7,6 +7,7 @@ var app = angular.module( 'moviematch', [
   'moviematch.services',
   'moviematch.lobby',
   'moviematch.genres',
+  'moviematch.movies',
   'btford.socket-io',
   'moviematch.directive',
   'moviematch.dstValidateUser'
@@ -34,6 +35,11 @@ var app = angular.module( 'moviematch', [
     .when( '/genres', {
       templateUrl: 'app/genres/genres.html',
       controller: 'GenresController',
+      authenticate: true
+    })
+    .when( '/movies', {
+      templateUrl: 'app/movies/movies.html',
+      controller: 'MoviesController',
       authenticate: true
     })
     .when( '/sessions', {

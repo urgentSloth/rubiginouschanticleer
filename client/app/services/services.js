@@ -183,6 +183,20 @@ angular.module( 'moviematch.services', [] )
 
   };
 })
+.factory ('FetchMovies', function($http) {
+  return {
+
+    getMovies: function (genreId) {
+      return $http.get('/api/movies/' + genreId)
+        .then(function(res) {
+          return res.data;
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
+    }
+  }
+})
 .factory ('FetchGenres', function($http) {
   return {
 
