@@ -20,7 +20,7 @@ module.exports = {
       res.end();
     } )
   },
-
+  
   getSessionByName: function( req, res, next ) {
     var sessionName = req.params.sessionName;
 
