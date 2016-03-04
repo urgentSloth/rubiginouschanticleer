@@ -1,6 +1,10 @@
 angular.module( 'moviematch.auth', [] )
 
 .controller( 'AuthController', function( $scope, Auth, $window, $location, $timeout ) {
+  if (Auth.isAuth()) {
+    $location.path('/lobby');
+  }
+
   $scope.user = {};
   $scope.error = {}
   $scope.error.userInput = "Please enter a username.";
@@ -21,11 +25,11 @@ angular.module( 'moviematch.auth', [] )
         $scope.setUserName();
         $window.localStorage.setItem( 'com.moviematch', token );
         $location.path( '/sessions' );
-      } )
+      })
       .catch( function ( error ) {
         $scope.error.signinError = "There was an error logging in. Please double check your username and password.";
         console.error( error );
-      } );
+      });
   };
 
   $scope.signup = function () {

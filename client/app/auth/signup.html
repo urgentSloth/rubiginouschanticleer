@@ -1,46 +1,33 @@
-<div id='signup'>
-    <div data-wrapper-for="Grid1" class="container-fluid">
-        <div class="row">
-          <form name="signupForm" ng-submit='signup()' novalidate>
-            <div class="col-xs-12">
-                <h1>
-                    Sign Up
-                </h1>
-            </div>
-            <div class="col-xs-5">
-                <h4>
-                    Username:
-                </h4>
-            </div>
-            <div class="col-xs-7">
-                <input type="text" value="" placeholder="Enter Username" class="form-control" name="userInput" dst-validate-user ng-model='user.username' ng-class="{ 'error': signupForm.userInput.$invalid && signupForm.$dirty && signupForm.userInput.$error.uniqueUsername}" required>
-            </div>
-            <div class="col-xs-5">
-                <h4>
-                    Password:
-                </h4>
-            </div>
-            <div class="col-xs-7">
-                <input type="password" value="" placeholder="Enter Password" class="form-control" name="pwdInput" ng-model='user.password' ng-class="{ 'error': signinForm.pwdInput.$invalid && signinForm.$dirty }" required>
-            </div>
-            <div class="col-xs-12">
-                <span class="col-md-12 error-msg" ng-show="signupForm.userInput.$invalid && signupForm.$dirty">{{ error.userInput }}</span>
-                <span class="col-xs-12 error-msg" ng-show="signupForm.pwdInput.$invalid && signupForm.$dirty">{{ error.pwdInput }}</span>
-            </div>
-<!--             <div class="error-msg col-xs-12" ng-show="error.signupError">
-                {{ error.signupError }}</div>
-            </div> -->
-            <div class="col-xs-12">
-                <button ng-disabled="signupForm.$invalid" class="btn btn-success" type="submit" ng-disabled="signinForm.$invalid">
-                    Sign Up
-                </button>
-            </div>
-          </form>
-            <div class="col-xs-12">
-              <a href="#/signin">
-                  Already a user? <strong>Sign In</strong>
-              </a>
-            </div>
-        </div>
+<div class="container">
+  <form name="signupForm" class="form-signin"
+    ng-submit='signup()' novalidate>
+    <input name="userInput" type="text"
+      class="form-control"
+      placeholder="Username"
+      ng-model='user.username' value=""
+      dst-validate-user
+      ng-class="{'error': signupForm.userInput.$invalid && signupForm.$dirty && signupForm.userInput.$error.uniqueUsername}"
+      required/>
+    <input name="pwdInput" type="password" class="form-control"
+      placeholder="Password"
+      ng-model='user.password' value=""
+      ng-class="{'error': signinForm.pwdInput.$invalid && signinForm.$dirty}"
+      required/>
+    <button class="btn btn-lg btn-primary btn-block btn-success"
+      type="submit"
+      ng-disabled="signupForm.$invalid">
+      Sign up
+    </button>
+    <a class="btn btn-lg btn-primary btn-block" href="#/signin">
+        Already have an account?
+    </a>
+    <div class="col-xs-12">
+        <span class="error-msg" ng-show="signupForm.userInput.$invalid && signupForm.$dirty">
+          {{ error.userInput }}
+        </span>
+        <span class="error-msg" ng-show="signupForm.pwdInput.$invalid && signupForm.$dirty">
+          {{ error.pwdInput }}
+        </span>
     </div>
-</div>
+  </form>
+</div> 
