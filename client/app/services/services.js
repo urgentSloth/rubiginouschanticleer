@@ -160,7 +160,7 @@ angular.module( 'moviematch.services', [] )
 })
 
 .factory ('FetchMovies', function($http) {
-  var moviesArr;
+  var moviesArr = [];
   return {
     getMoviesArr: function(){
       return moviesArr;
@@ -180,7 +180,7 @@ angular.module( 'moviematch.services', [] )
 })
 
 .factory ('FetchGenres', function($http) {
-  var genresArr;
+  var genresArr = [];
   return {
     getGenresArr: function(){
       return genresArr;
