@@ -4,9 +4,10 @@ angular.module( 'moviematch.selectingOption', [] )
 .controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout, FetchGenres ) {
 
   var category = $location.path().split('/')[2];
-  var seconds = 10;
-  var optionsVotedFor = [];
-  var maxNumVotes = 3;
+  
+  var seconds = 30;
+  $scope.optionsVotedFor = [];
+  $scope.maxNumVotes = 3;
 
   Session.getSession()
   .then( function( session ) {
@@ -14,14 +15,17 @@ angular.module( 'moviematch.selectingOption', [] )
   });
 
   $scope.vote = function(option){
-    var optionIndex = optionsVotedFor.indexOf(option.id);
+    var optionIndex = $scope.optionsVotedFor.indexOf(option.id);
+    var addVote;
     if(optionIndex > -1){//if already voted for that option, we will remove the vote
-      var addVote = false;
-      optionsVotedFor.splice(optionIndex, 1);
+      addVote = false;
+      $scope.optionsVotedFor.splice(optionIndex, 1);
     } else { // if not we'll add it 
-      if(optionsVotedFor.length < maxNumVotes){
-        var addVote = true;
-        optionsVotedFor.push(option.id);
+      if($scope.optionsVotedFor.length < $scope.maxNumVotes){
+        addVote = true;
+        $scope.optionsVotedFor.push(option.id);
+      } else {
+        return false; //Tell D3 not to highlight the bubble
       }
     }
 
@@ -32,7 +36,7 @@ angular.module( 'moviematch.selectingOption', [] )
     };
 
     Votes.addVote(voteDate);
-    
+    return true; //Tell D3 to highlight the bubble
   };
 
   var tallyVotes = function(){
@@ -43,8 +47,8 @@ angular.module( 'moviematch.selectingOption', [] )
       $location.path('/selected/'+category);
     } else { //when there's a tie
       $scope.options = winnerArr;
-      optionsVotedFor =[];
-      maxNumVotes = 1;
+      $scope.optionsVotedFor =[];
+      $scope.maxNumVotes = 1;
       //if tie twice in a row, we want to remove an option
       setTimer(seconds);
     }
@@ -98,17 +102,18 @@ angular.module( 'moviematch.selectingOption', [] )
       //sendVote: '&'
     },
     link: function(scope, ele, attrs) {
-      var width = 980,
-          height = 510,
+      var width = angular.element($window)[0].innerWidth,
+          height = 800,
           data = scope.$parent.options;
           allNodes = null,
           allLabels = null,
           margin = {top: 50, right: 0, bottom: 0, left: 0},
-          maxRadius = 50,
+          maxRadius = 80,
           rScale = d3.scale.sqrt().range([0, maxRadius]),
           rValue = function(d) {return parseInt(d.votes)+1},//To show bubbles, we need count of at least 1
           idValue = function(d) {return d.id},
           textValue = function(d) {return d.title},
+          voteValue = function(d) {return parseInt(d.votes)},
           collisionPadding = 4,
           minCollisionRadius = 12,
           jitter = 0.5;
@@ -130,7 +135,8 @@ angular.module( 'moviematch.selectingOption', [] )
                     .on("tick", tick);
 
       var update = function() {
-        maxDomainValue = d3.max(data, function(d) {return rValue(d);});
+        maxDomainValue = d3.max(data, function(d) {return rValue(d) + 1;});
+
         rScale.domain([0, maxDomainValue]); //Sets the bubble sizing scale;
         data.forEach(function(d, i){return d.forceR = Math.max(minCollisionRadius, rScale(rValue(d)))});
         force.nodes(data).start();
@@ -153,6 +159,9 @@ angular.module( 'moviematch.selectingOption', [] )
                 .call(connectEvents)
                 .append("circle")
                 .attr("r", function(d){return rScale(rValue(d));});
+
+        //if already highlighted, remove highlight, else highlight
+        d3.selectAll(".bubble-node").classed("bubble-selected", isPicked);
       };
 
       var updateLabels = function() {
@@ -160,6 +169,13 @@ angular.module( 'moviematch.selectingOption', [] )
                               .data(data, function(d){return idValue(d)});
 
         allLabels.exit().remove(); //Remove unused labels
+
+        //Update existing labels
+        allLabels.selectAll(".bubble-label")
+                 .text(function(d) {return textValue(d)});
+
+        allLabels.selectAll(".bubble-label-value")
+                 .text(function(d) {return voteValue(d)});
 
         //Add text and count to label
         var labelsEnter = allLabels.enter()
@@ -169,7 +185,7 @@ angular.module( 'moviematch.selectingOption', [] )
                                    .call(force.drag)
                                    .append("div")
                                    .attr("class", "bubble-label-value")
-                                   .text(function(d) {return rValue(d)});
+                                   .text(function(d) {return voteValue(d)});
 
         allLabels.style("font-size", function(d) {return Math.max(12, rScale(rValue(d) / 8)) + "px"})
                  .style("width", function(d) {return 2.5 * rScale(rValue(d)) + "px"});
@@ -234,55 +250,38 @@ angular.module( 'moviematch.selectingOption', [] )
         allNodes.classed("bubble-hover", false);
       };
 
+      var isPicked = function(d){return scope.$parent.optionsVotedFor.indexOf(d.id) > -1};
+
       var click = function(d) {
         scope.$parent.vote(d);
-        if (d3.event.defaultPrevented) return; // click suppressed when dragging
         d3.event.preventDefault();
-        if(d3.select(this).classed("bubble-selected")){
-          d3.select(this).classed("bubble-selected",false) 
-        } else {
-          d3.select(this).classed("bubble-selected",true)
-        };
-        
-        update();
       };
 
 
       var svg = d3.select(ele[0]).selectAll("svg").data([data]);
 
       var svgEnter = svg.enter().append("svg");
-      svg.attr("width", "100%");
-      svg.attr("height", "100%");
+      svg.attr("width", width);
+      svg.attr("height", height);
 
       bubbleGroup = svgEnter.append("g")
                      .attr("id", "bubble-nodes")
                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      // bubbleGroup.append("rect")
-      //            .attr("id", "bubble-background")
-      //            .attr("width", "100%")
-      //            .attr("height", "100%")
 
       labelGroup = d3.select(ele[0]).selectAll("#bubble-labels").data([data])
                                     .enter()
                                     .append("div")
                                     .attr("id", "bubble-labels");
       
-      // $window.onresize = function() {
-      //   var w = ele.clientWidth;
-      //   var h = ele.clientHeight;
-      //   console.log(ele);
-        //console.log(angular.element($window)[0].innerWidth);
-        //update();
-        //scope.$apply();
-      // };
+      //If window size changes, reposition the bubbles
+      $window.onresize = function() {
+        width = angular.element($window)[0].innerWidth;
+        svg.attr("width", width);
+        svg.attr("height", height);
+        update();
+      };
 
-      // scope.$watch(function() {
-      //   return angular.element($window)[0].innerWidth;
-      // }, function() {
-      //   update();
-      // });
-
+      //If data changes, update the bubbles
       scope.$watch('$parent.options', function(newData) {
         if (!newData) return;
         data = newData;
