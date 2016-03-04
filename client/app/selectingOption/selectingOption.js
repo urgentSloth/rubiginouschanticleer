@@ -15,7 +15,6 @@ angular.module( 'moviematch.selectingOption', [] )
 
   $scope.vote = function(option){
     var optionIndex = optionsVotedFor.indexOf(option.id);
-    console.log('optionIndex in arr?', optionIndex);
     if(optionIndex > -1){//if already voted for that option, we will remove the vote
       var addVote = false;
       optionsVotedFor.splice(optionIndex, 1);
@@ -68,14 +67,11 @@ angular.module( 'moviematch.selectingOption', [] )
   setTimer(seconds);
 
   if(category === 'genre'){//fetching genres 
-    FetchGenres.getAllGenres()
-      .then(function(data){
-        data.forEach(function(option){
-          option.votes = 0; 
-        });
-        $scope.options = data;
-
-      });
+    var data = FetchGenres.getGenresArr();
+    data.forEach(function(option){
+        option.votes = 0; 
+    });
+    $scope.options = data;
 
   } else {//fetching movies is synchronous because we already made the api call 
     var data = FetchMovies.getMoviesArr();
@@ -87,7 +83,7 @@ angular.module( 'moviematch.selectingOption', [] )
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('added da vote!', vote);
+    console.log('added a vote:', vote);
     //update our array of options to reflect the new vote
     $scope.options = Votes.receiveVote(vote.id, $scope.options, vote.addVote);
   });
