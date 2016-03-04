@@ -151,7 +151,7 @@ angular.module( 'moviematch.services', [] )
         winnerArr.splice(index, 1);
       }
       //update new number of options
-      prevNumberOptions = options.length;
+      prevNumberOptions = winnerArr.length;
 
       return winnerArr;
     }
