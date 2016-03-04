@@ -6,8 +6,6 @@ var app = angular.module( 'moviematch', [
   'moviematch.sessions',
   'moviematch.services',
   'moviematch.lobby',
-  'moviematch.genres',
-  'moviematch.movies',
   'btford.socket-io',
   'moviematch.directive',
   'moviematch.dstValidateUser'
