@@ -3,8 +3,10 @@ angular.module( 'moviematch.selectingOption', [] )
 
 .controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout, FetchGenres ) {
 
-  var category = $routeParams.category;
+  var category = $location.path().split('/')[2];
   var seconds = 5;
+  var timesVoted = 0;
+  var votesAllowed = 3;
 
   Session.getSession()
   .then( function( session ) {
@@ -12,17 +14,31 @@ angular.module( 'moviematch.selectingOption', [] )
   });
 
 
-  $scope.vote = function(option){
-    Votes.addVote($scope.session.sessionName, option.id);
+  $scope.genreVote = function(option){
+    if(timesVoted < votesAllowed){      
+      Votes.addVote($scope.session.sessionName, option.id);
+      timesVoted += 1;
+    }
   };
+
+  $scope.movieVote = function(option){
+    if(timesVoted < votesAllowed){      
+      Votes.addVote($scope.session.sessionName, option.id);
+      timesVoted += 1;
+    }
+  };
+
 
   var tallyVotes = function(){
    var winnerArr = Votes.tallyVotes($scope.options);
     if( winnerArr.length === 1 ) { //when there's a winner
       Session.setSelectedOption(winnerArr[0]);
-     $location.path('/selected/'+category);
+      Socket.removeAllListeners("voteAdded");
+      $location.path('/selected/'+category);
     } else { //when there's a tie
       $scope.options = winnerArr;
+      timesVoted = 0;
+      votesAllowed = 1;
       //if tie twice in a row, we want to remove an option
       setTimer(seconds);
     }
