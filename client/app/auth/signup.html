@@ -4,29 +4,20 @@
     <input name="userInput" type="text"
       class="form-control"
       placeholder="Username"
-      ng-model='user.username' value=""
+      ng-model='user.username'
       dst-validate-user
-      ng-class="{'error': signupForm.userInput.$invalid.required}"
       required/>
     <input name="pwdInput" type="password" class="form-control"
       placeholder="Password"
-      ng-model='user.password' value=""
-      ng-class="{'error': signupForm.pwdInput.$invalid.required}"
+      ng-model='user.password'
       required/>
     <button class="btn btn-lg btn-primary btn-block btn-success"
-      type="submit">
+      type="submit"
+      ng-disabled="signupForm.$invalid">
       Sign up
     </button>
     <a class="btn btn-lg btn-primary btn-block" href="#/signin">
         Already have an account?
     </a>
-    <div class="col-xs-12">
-        <span class="error-msg" ng-show="signupForm.userInput.$invalid.required">
-          {{ error.userInput }}
-        </span>
-        <span class="error-msg" ng-show="signupForm.pwdInput.$invalid.required">
-          {{ error.pwdInput }}
-        </span>
-    </div>
   </form>
 </div> 
