@@ -1,13 +1,29 @@
- <div class="container">
-  <form class="form-signin" ng-submit='signin()' novalidate>
-    <label for="inputEmail" class="sr-only">Username</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Username" ng-model='user.username' ng-class="{ 'error': signinForm.userInput.$invalid && signinForm.$dirty }" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model='user.password' ng-class="{ 'error': signinForm.pwdInput.$invalid && signinForm.$dirty }" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="signinForm.$invalid">Sign in</button>
+ <div class="container" back-img="http://mancavin.com/wp-content/uploads/2016/01/friends-watching-movie-tv.jpg">
+  <form name="signinForm" class="form-signin" 
+    ng-submit='signin()'
+    novalidate>
+    <input type="text" class="form-control" value=""
+      placeholder="Username"
+      name="userInput"
+      ng-model='user.username' 
+      ng-class="{'error': signinForm.userInput.$invalid && signinForm.$dirty}"
+      required>
+    <input type="password" class="form-control" value=""
+      placeholder="Password"
+      name="pwdInput"
+      ng-model='user.password' 
+      ng-class="{'error': signinForm.pwdInput.$invalid && signinForm.$dirty}"
+      required>
+    <button class="btn btn-lg btn-primary btn-block btn-success"
+      type="submit" >
+      Sign in
+    </button>
     <a class="btn btn-lg btn-primary btn-block" href="#/signup">
         Don't have an account?
     </a>
+    <div class="error-msg" ng-show="error.signinError">
+      {{ error.signinError }}
+    </div>
   </form>
-</div> <!-- /container -->
+</div> 
 

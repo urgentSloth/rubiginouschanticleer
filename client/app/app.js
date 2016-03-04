@@ -9,7 +9,7 @@ var app = angular.module( 'moviematch', [
   'btford.socket-io',
   'moviematch.directive',
   'moviematch.dstValidateUser'
-    ])
+])
 
 .config( function ( $routeProvider, $httpProvider ) {
   $routeProvider
@@ -22,7 +22,7 @@ var app = angular.module( 'moviematch', [
       controller: 'AuthController'
     })
     .when( '/signout', {
-      templateUrl: 'app/auth/signout.html',
+      templateUrl: 'app/auth/signin.html',
       controller: 'AuthController'
     })
     .when( '/selectingOption/genre', {
@@ -52,7 +52,7 @@ var app = angular.module( 'moviematch', [
       authenticate: true
     })
     .otherwise({
-      redirectTo: '/signin'
+      redirectTo: '/lobby'
     })
 
     $httpProvider.interceptors.push('AttachTokens');

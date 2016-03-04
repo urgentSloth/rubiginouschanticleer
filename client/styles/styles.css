@@ -1,12 +1,46 @@
-body {
+body, html {
   width: 100%;
   height: 100%;
-  background-image: url('http://i.dailymail.co.uk/i/pix/2016/01/26/11/3095AF9200000578-3417195-image-a-31_1453809262606.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-/*
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin {
+  margin-bottom: 10px;
+}
+
+.ng-scope {
+  height: 100%;
+  width: 100%;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
 button:disabled {
   color: lightgrey;
 }
@@ -27,11 +61,6 @@ button:disabled {
 .center {
   text-align: center;
 }
-
-.container {
-  width: 100%;
-}
-
 
 .laptop-buttons {
   width: 100%;
@@ -132,4 +161,3 @@ hr {
   margin: 0 auto;
   width: 100%;
 }
-*/
