@@ -25,19 +25,14 @@ var app = angular.module( 'moviematch', [
       templateUrl: 'app/auth/signout.html',
       controller: 'AuthController'
     })
-    .when( '/selectingOption/:category', {
-      templateUrl: 'app/selectingOption/selectingOption.html',
+    .when( '/selectingOption/genre', {
+      templateUrl: 'app/selectingOption/selectingGenre.html',
       controller: 'SelectingOptionController',
       authenticate: true
     })
-    .when( '/genres', {
-      templateUrl: 'app/genres/genres.html',
-      controller: 'GenresController',
-      authenticate: true
-    })
-    .when( '/movies', {
-      templateUrl: 'app/movies/movies.html',
-      controller: 'MoviesController',
+    .when( '/selectingOption/movie', {
+      templateUrl: 'app/selectingOption/selectingMovie.html',
+      controller: 'SelectingOptionController',
       authenticate: true
     })
     .when( '/sessions', {
