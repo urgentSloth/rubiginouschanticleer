@@ -83,7 +83,7 @@ angular.module( 'moviematch.selectingOption', [] )
 
   //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('added da vote!', vote);
+    console.log('added a vote:', vote);
     //update our array of options to reflect the new vote
     $scope.options = Votes.receiveVote(vote.id, $scope.options, vote.addVote);
   });
