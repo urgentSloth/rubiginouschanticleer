@@ -161,3 +161,103 @@ hr {
   margin: 0 auto;
   width: 100%;
 }
+
+
+/*Styles from D3 implementation*/
+.votePage {
+  width: 100%;
+  height: 600px;
+}
+
+a, a:visited {
+  color:#333;
+}
+
+text {
+  font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+
+#container {
+  padding-top:20px;
+  width: 980px;
+  border-left: 2px #ddd solid;
+  border-right: 2px #ddd solid;
+}
+
+header {
+  padding: 10px;
+}
+
+#book-title {
+  font-family: georgia, "times new roman", times, serif;
+  color: #555;
+  font-size: 2.3em;
+  text-align: center;
+}
+
+#text-select {
+  float:right;
+  margin-right: 10px;
+}
+
+#vis {
+  /*overflow: hidden;*/
+  position: relative;
+}
+
+#status {
+  padding:0 0 20px 20px;
+}
+
+#controls {
+  padding: 20px;
+  background-color: #eee;
+  margin: 10px;
+  width: 350px;
+}
+
+#bubble-background {
+  fill: none;
+  pointer-events: all;
+}
+
+.bubble-node {
+  /* fill: #d1e0f3; */
+  fill: #DCE9BE;
+}
+
+.bubble-hover {
+   fill: #b8c7d9;
+}
+
+.bubble-selected {
+  fill: #a8c8ee;  
+  stroke: #6081a3; 
+  stroke-width: 2.5px;
+}
+
+.active {
+  color: #A6BA92
+}
+
+.bubble-label {
+  pointer-events: none; /* When clicked, the click event falls thru to underlying element*/
+  font-family: georgia, "times new roman", times, serif;
+  color: inherit;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1em;
+  position: absolute;
+}
+
+.bubble-label .bubble-label-value {
+  pointer-events: none; /* When clicked, the click event falls thru to underlying element*/
+  font: 20px sans-serif;
+  white-space: nowrap;
+}
+
