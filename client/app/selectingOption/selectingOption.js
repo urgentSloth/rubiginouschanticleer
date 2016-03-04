@@ -5,29 +5,36 @@ angular.module( 'moviematch.selectingOption', [] )
 
   var category = $location.path().split('/')[2];
   var seconds = 5;
-  var timesVoted = 0;
-  var votesAllowed = 3;
+  var optionsVotedFor = [];
+  var maxNumVotes = 3;
 
   Session.getSession()
   .then( function( session ) {
     $scope.session = session;
   });
 
-
-  $scope.genreVote = function(option){
-    if(timesVoted < votesAllowed){      
-      Votes.addVote($scope.session.sessionName, option.id);
-      timesVoted += 1;
+  $scope.vote = function(option){
+    var optionIndex = optionsVotedFor.indexOf(option.id);
+    console.log('optionIndex in arr?', optionIndex);
+    if(optionIndex > -1){//if already voted for that option, we will remove the vote
+      var addVote = false;
+      optionsVotedFor.splice(optionIndex, 1);
+    } else { // if not we'll add it 
+      if(optionsVotedFor.length < maxNumVotes){
+        var addVote = true;
+        optionsVotedFor.push(option.id);
+      }
     }
-  };
 
-  $scope.movieVote = function(option){
-    if(timesVoted < votesAllowed){      
-      Votes.addVote($scope.session.sessionName, option.id);
-      timesVoted += 1;
-    }
-  };
+    voteDate = {
+      sessionName: $scope.session.sessionName, 
+      id: option.id, 
+      addVote: addVote
+    };
 
+    Votes.addVote(voteDate);
+    
+  };
 
   var tallyVotes = function(){
    var winnerArr = Votes.tallyVotes($scope.options);
@@ -37,8 +44,8 @@ angular.module( 'moviematch.selectingOption', [] )
       $location.path('/selected/'+category);
     } else { //when there's a tie
       $scope.options = winnerArr;
-      timesVoted = 0;
-      votesAllowed = 1;
+      optionsVotedFor =[];
+      maxNumVotes = 1;
       //if tie twice in a row, we want to remove an option
       setTimer(seconds);
     }
@@ -82,7 +89,7 @@ angular.module( 'moviematch.selectingOption', [] )
   Socket.on( 'voteAdded', function(vote) {
     console.log('added da vote!', vote);
     //update our array of options to reflect the new vote
-    $scope.options = Votes.receiveVote(vote.id, $scope.options);
+    $scope.options = Votes.receiveVote(vote.id, $scope.options, vote.addVote);
   });
 
 

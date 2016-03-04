@@ -103,22 +103,24 @@ angular.module( 'moviematch.services', [] )
 .factory( 'Votes', function( $http, $location, Socket ) {
   var prevNumberOptions; 
   return {
-    addVote: function(sessionName, id){
-      voteData = {sessionName: sessionName, id: id};
+    addVote: function(voteData){
       Socket.emit( 'vote', voteData );
     },
 
-    receiveVote: function(id, options){
+    receiveVote: function(id, options, addVote){
       for(var i = 0; i < options.length; i ++){
         if(options[i].id === id){
-          options[i].votes += 1;
+          if(addVote){
+            options[i].votes += 1;            
+          } else {
+            options[i].votes -= 1;     
+          }
         }
       }
       return options;
     },
 
     tallyVotes: function(options){
-      console.log('running for movies?', options);
       var winnerArr = [];
       var mostVotes = 0;
       options.forEach(function(option){
@@ -129,13 +131,15 @@ angular.module( 'moviematch.services', [] )
           mostVotes = option.votes;
         }
       });
+
       //if the number of options didn't get smaller, remove one randomly 
-      if( prevNumberOptions === winnerArr.length ){
+      if( prevNumberOptions === winnerArr.length){
         var index = Math.floor(Math.random() * winnerArr.length);
         winnerArr.splice(index, 1);
       }
       //update new number of options
-      prevNumberOptions = winnerArr.length;
+      prevNumberOptions = options.length;
+
       return winnerArr;
     }
   }
@@ -177,7 +181,6 @@ angular.module( 'moviematch.services', [] )
 
 .factory ('FetchGenres', function($http) {
   return {
-
     getAllGenres: function () {
       return $http.get('/api/genres/')
         .then(function(res) {
