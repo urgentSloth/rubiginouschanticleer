@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" back-img="http://mancavin.com/wp-content/uploads/2016/01/friends-watching-movie-tv.jpg">
   <form name="signupForm" class="form-signin"
     ng-submit='signup()' novalidate>
     <input name="userInput" type="text"
@@ -6,26 +6,25 @@
       placeholder="Username"
       ng-model='user.username' value=""
       dst-validate-user
-      ng-class="{'error': signupForm.userInput.$invalid && signupForm.$dirty && signupForm.userInput.$error.uniqueUsername}"
+      ng-class="{'error': signupForm.userInput.$invalid.required}"
       required/>
     <input name="pwdInput" type="password" class="form-control"
       placeholder="Password"
       ng-model='user.password' value=""
-      ng-class="{'error': signinForm.pwdInput.$invalid && signinForm.$dirty}"
+      ng-class="{'error': signupForm.pwdInput.$invalid.required}"
       required/>
     <button class="btn btn-lg btn-primary btn-block btn-success"
-      type="submit"
-      ng-disabled="signupForm.$invalid">
+      type="submit">
       Sign up
     </button>
     <a class="btn btn-lg btn-primary btn-block" href="#/signin">
         Already have an account?
     </a>
     <div class="col-xs-12">
-        <span class="error-msg" ng-show="signupForm.userInput.$invalid && signupForm.$dirty">
+        <span class="error-msg" ng-show="signupForm.userInput.$invalid.required">
           {{ error.userInput }}
         </span>
-        <span class="error-msg" ng-show="signupForm.pwdInput.$invalid && signupForm.$dirty">
+        <span class="error-msg" ng-show="signupForm.pwdInput.$invalid.required">
           {{ error.pwdInput }}
         </span>
     </div>

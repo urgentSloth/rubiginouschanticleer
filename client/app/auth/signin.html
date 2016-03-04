@@ -1,4 +1,4 @@
- <div class="container">
+ <div class="container" back-img="http://mancavin.com/wp-content/uploads/2016/01/friends-watching-movie-tv.jpg">
   <form name="signinForm" class="form-signin" 
     ng-submit='signin()'
     novalidate>
@@ -15,8 +15,7 @@
       ng-class="{'error': signinForm.pwdInput.$invalid && signinForm.$dirty}"
       required>
     <button class="btn btn-lg btn-primary btn-block btn-success"
-      type="submit" 
-      ng-disabled="signinForm.$invalid">
+      type="submit" >
       Sign in
     </button>
     <a class="btn btn-lg btn-primary btn-block" href="#/signup">
