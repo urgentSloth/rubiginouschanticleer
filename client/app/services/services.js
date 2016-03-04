@@ -102,7 +102,18 @@ angular.module( 'moviematch.services', [] )
 
 .factory( 'Votes', function( $http, $location, Socket ) {
   var prevNumberOptions; 
+  var hashFn = function(str, max) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      var letter = str[i];
+      hash = (hash << 5) + letter.charCodeAt(0);
+      hash = (hash & hash) % max;
+    }
+    return hash;
+  };
+
   return {
+
     addVote: function(voteData){
       Socket.emit( 'vote', voteData );
     },
@@ -134,7 +145,9 @@ angular.module( 'moviematch.services', [] )
 
       //if the number of options didn't get smaller, remove one randomly 
       if( prevNumberOptions === winnerArr.length){
-        var index = Math.floor(Math.random() * winnerArr.length);
+        //get psuedo-random index that will be the same for each user
+        var middleOfArr = Math.floor(winnerArr.length/2);
+        var index = hashFn('' + winnerArr[middleOfArr].title, winnerArr.length - 1);
         winnerArr.splice(index, 1);
       }
       //update new number of options

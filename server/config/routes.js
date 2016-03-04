@@ -34,7 +34,6 @@ module.exports = function ( app, express ) {
   app.get('/api/sessions/:session_id/:user_id', sessions_usersController.getSessionUserBySessionAndUser );
   app.post('/api/sessions/users', sessions_usersController.addOneUser );
 
-
   // If a request is sent somewhere other than the routes above,
   // send it through our custom error handler
   app.use( helpers.errorLogger );

@@ -13,7 +13,7 @@ angular.module( 'moviematch.selected', [] )
     //also fetch movies data now so we don't have to wait on it, in the selectingOptions view
     FetchMovies.getMovies( $scope.selectedOption.id )
     .then(function(movies){
-        $timeout(nextScreen, 2000);         
+        $timeout(nextScreen, 5000);         
     });
   }
 

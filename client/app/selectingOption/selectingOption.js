@@ -4,7 +4,7 @@ angular.module( 'moviematch.selectingOption', [] )
 .controller( 'SelectingOptionController', function( $scope, Votes, Session, Socket, $location, Auth, $routeParams, FetchMovies, $timeout, FetchGenres ) {
 
   var category = $location.path().split('/')[2];
-  var seconds = 30;
+  var seconds = 10;
   var optionsVotedFor = [];
   var maxNumVotes = 3;
 
