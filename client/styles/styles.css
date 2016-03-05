@@ -248,7 +248,7 @@ hr {
 
 .bubble-label .bubble-label-value {
   pointer-events: none; /* When clicked, the click event falls thru to underlying element*/
-  font-size: 20px;
+  font-size: 15px;
   white-space: nowrap;
 }
 
