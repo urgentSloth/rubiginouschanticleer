@@ -91,8 +91,11 @@ angular.module( 'moviematch.services', [] )
       }, function( err ) {
         console.error( err );
       });
-    }
+    },
 
+    destroySession: function( sessionName ) {
+      $window.localStorage.clear();
+    }
   }
 })
 
@@ -101,7 +104,7 @@ angular.module( 'moviematch.services', [] )
 }])
 
 .factory( 'Votes', function( $http, $location, Socket ) {
-  var prevNumberOptions; 
+  var prevNumberOptions = null; 
   var hashFn = function(str, max) {
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
@@ -113,6 +116,9 @@ angular.module( 'moviematch.services', [] )
   };
 
   return {
+    resetPrevNumOptions: function(){
+      prevNumberOptions = null;
+    },
 
     addVote: function(voteData){
       Socket.emit( 'vote', voteData );
@@ -124,7 +130,9 @@ angular.module( 'moviematch.services', [] )
           if(addVote){
             options[i].votes += 1;            
           } else {
-            options[i].votes -= 1;     
+            if(options[i].votes) {
+              options[i].votes -= 1; //Don't unvote if 0;
+            }
           }
         }
       }

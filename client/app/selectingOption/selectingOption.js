@@ -5,9 +5,11 @@ angular.module( 'moviematch.selectingOption', [] )
   
   var category = $location.path().split('/')[2];
   
-  var seconds = 30;
+  var seconds = 15;
   $scope.optionsVotedFor = [];
   $scope.maxNumVotes = 3;
+
+  Votes.resetPrevNumOptions();
 
   Session.getSession()
   .then( function( session ) {
@@ -196,13 +198,13 @@ angular.module( 'moviematch.selectingOption', [] )
                                    .attr("class", "bubble-label-value")
                                    .text(function(d) {return voteValue(d)});
 
-        allLabels.style("font-size", function(d) {return Math.max(12, rScale(rValue(d) / 8)) + "px"})
+        allLabels.style("font-size", function(d) {return Math.max(12, rScale(rValue(d) / 9)) + "px"})
                  .style("width", function(d) {return 2.5 * rScale(rValue(d)) + "px"});
 
         //Trick to get correct dx value. After getting it, we delete span
         allLabels.append("span").text(function(d) {return textValue(d)})
          .each(function(d) {
-           return d.dx = Math.max(2.5 * rScale(rValue(d)), this.getBoundingClientRect().width);
+           return d.dx = Math.max(1.5 * rScale(rValue(d)), this.getBoundingClientRect().width);
          })
          .remove();
 
