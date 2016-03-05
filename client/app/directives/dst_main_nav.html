@@ -1,27 +1,9 @@
-<section class="main-nav">
-  <div class="main-nav-bar">
-    <span class="app-title">
-      <img src="../../assets/MovieMatch2-600.png" class="app-logo" />
-    </span>
-    <span class="session-name" ng-show="sessionName">
-      {{ sessionName }}
-    </span>
-    <!-- TODO: Add an ng-show on username -->
-    <div class="main-nav-menu" >
-      <div class="logo-arrow" ng-click="toggleNavList({type: 'main-click'})">
-        <img class="main-nav-menu-icon" src="../../assets/navmenu.png" />
-      </div>
-      <ul class="nav list-unstyled" ng-show="expand" ng-mouseleave="toggleNavList($event)" ng-click="toggleNavList($event)" >
-        <li>
-          <a href="#/sessions">Sessions</a>
-        </li>
-        <li>
-          <a href="#/settings">Settings</a>
-        </li>
-        <li>
-          <a href="#/signout">Sign Out</a>
-        </li>
-      </ul>
+       {{ sessionName }}
+      </span>
+ +    <span class="navButtons pull-right">
+ +      <a  id = 'navList' href="#/sessions">Sessions</a>
+ +      <a id = 'navList' href="#/signout">Sign Out</a>
+ +    </span>
+ +
     </div>
-  </div>
-</section>
+  </section>

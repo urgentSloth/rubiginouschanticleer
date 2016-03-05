@@ -1,91 +1,56 @@
-<!-- this is the page that a user can create a new group for their freinds to join
-or the user can join a group that their friend has already created -->
 
-<!-- <div id="match" class="container">
-  <div class="header center row">
-    visible-xs and -sm denote that the element is visible on a small screen
-    <h2 class="col-xs-12 visible-xs visible-sm">
-      <div class="session-name large">Join or create a group</div>
-    </h2>
-    hidden-xs and hidden-sm denote that the element is invisible on a small screen
-    <h2 class="col-xs-12 hidden-xs hidden-sm">
-      <span> Join or create a group </span>
-    </h2>
-  </div>
-  <p class="center">
-    <span class="bold">One last step, {{ username }}!</span>
-    Create a new Movie Match group or join an existing one.
-  </p>
- 
-    <label class="session-label" for="new-session">Create a new group:</label>
-    <input name="new-session" id="new-session" type="text" ng-model="sessionName" placeholder="name" required>
-
-    <button class="col-xs-5 pull-right btn-mobile visible-xs visible-sm" ng-disabled="createSessionForm.$invalid">Create Group</button>
-    <button class="col-xs-5 pull-right btn-laptop hidden-xs hidden-sm" ng-disabled="createSessionForm.$invalid">Create Group</button>
-  </form>
-  the hr has to be in a div for bootstrap
-<div class='row span12'>
-  <hr>
-</div>
-<div class="join-group-cnt block-center" ng-repeat="session in sessions track by $index">
-  <button class="col-xs-12 btn-mobile visible-xs visible-sm" ng-click="joinSession( session.sessionName )">Join <span class="bold">{{ session.sessionName }}</span></button>
-  <button class="col-xs-12 btn-laptop hidden-xs hidden-sm" ng-click="joinSession( session.sessionName )">Join <span class="bold">{{ session.sessionName }}</span></button>
-</div>
- -->
 
 <dst-main-nav></dst-main-nav>
-<div data-wrapper-for="Grid4" class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>
-                Hello, {{ username }}!
-            </h3>
-        </div>
-        <div class="col-xs-12">
-            <h3>
-                Join / Create MovieMatch-Group:
-            </h3>
-        </div>
-    </div>
-</div>
-<div data-wrapper-for="Grid3" class="container-fluid">
-    <div class="row">
-        <div class="col-xs-3">
-            <h4>
-                Create:
-            </h4>
-        </div>
-           <form name="createSessionForm" class="new-session-cnt" ng-submit="createSession( sessionName )" novalidate>
-            <div class="col-xs-6">
-                <input type="text" value="" placeholder="Enter Groupname" class="form-control" name="new-session" ng-model="sessionName" required>
-            </div>
-            <div class="col-xs-3">
-                <button class="btn btn-success" type="submit" ng-disabled="createSessionForm.$invalid">
-                    Create
-                </button>
-            </div>
-          </form>
-        <div class="col-xs-12">
-          <hr>
-        </div>
-        <div class="col-xs-12">
-            <h4>
-                Join an existing group:
-            </h4>
-        </div>
-    </div>
-</div>
-<div data-wrapper-for="Grid2" class="container-fluid">
-  <div class="join-group-cnt block-center" ng-repeat="session in sessions track by $index">
-    <div class="row">
-        <div class="col-xs-2">
-        </div>
-        <div class="col-xs-8">
-            <button class="btn-block btn btn-link" type="button" ng-click="joinSession( session.sessionName )">
-                Join <span class="bold">{{ session.sessionName }}</span>
-            </button>
-        </div>
-        <div class="col-xs-2">
-        </div>
-    </div>
+<div class='box'>
+  <div>
+      <div class="row">
+          <div class="col-xs-12">
+              <h3 class='subheader'>
+                  Hello, {{ username }}!
+              </h3>
+          </div>
+      </div>
+  </div>
+  <div data-wrapper-for="Grid3" class="container-fluid">
+      <div class="row">
+          <div class="col-xs-3">
+              <h4>
+                  Create a game:
+              </h4>
+
+          </div>
+             <form name="createSessionForm" class="new-session-cnt" ng-submit="createSession( sessionName )" novalidate>
+              <div class="col-xs-6">
+                  <input type="text" value="" placeholder="Enter Groupname" class="form-control" name="new-session" ng-model="sessionName" required>
+              </div>
+              <div class="col-xs-3">
+                  <button class="btn btn-success" type="submit" ng-disabled="createSessionForm.$invalid">
+                      Create
+                  </button>
+              </div>
+            </form>
+          <div class="col-xs-12">
+            <hr>
+          </div>
+          <div class="col-xs-12">
+              <h4>
+                  Join an existing game:
+              </h4>
+          </div>
+      </div>
+  </div>
+  <div data-wrapper-for="Grid2" class="container-fluid">
+    <div class="join-group-cnt block-center" ng-repeat="session in sessions track by $index">
+      <div class="row">
+          <div class="col-xs-2">
+          </div>
+          <div class="col-xs-8">
+              <div ng-click="joinSession( session.sessionName )">
+                  <a  class='join'><span>Join</span> <span class="sessionNames bold">{{ session.sessionName }}</span></a>
+              </div>
+          </div>
+          <div class="col-xs-2">
+          </div>
+      </div>
+  </div>
 </div>

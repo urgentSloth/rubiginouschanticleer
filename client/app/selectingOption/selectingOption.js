@@ -127,7 +127,7 @@ angular.module( 'moviematch.selectingOption', [] )
                 .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"});
         
         allLabels.style("left", function(d) {return ((margin.left + d.x) - d.dx / 2) + "px"})
-                 .style("top", function(d) {return ((margin.top + d.y) - d.dy / 2) + "px"});
+                 .style("top", function(d) {return ((margin.top + d.y) - d.dy / 2) + 80 + "px"});
       };
 
       var force = d3.layout.force()
