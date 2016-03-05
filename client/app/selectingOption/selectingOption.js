@@ -49,7 +49,10 @@ angular.module( 'moviematch.selectingOption', [] )
       $scope.options = winnerArr;
       $scope.optionsVotedFor =[];
       $scope.maxNumVotes = 1;
-      //if tie twice in a row, we want to remove an option
+      seconds = Math.max(5,Math.floor(seconds / 2));//Reduce time in half
+      $scope.options.forEach(function(option){
+        option.votes = 0; 
+      });
       setTimer(seconds);
     }
   }
@@ -85,9 +88,7 @@ angular.module( 'moviematch.selectingOption', [] )
     $scope.options = data;
   }
 
-  //this will update our d3 animations eventually 
   Socket.on( 'voteAdded', function(vote) {
-    console.log('added a vote:', vote);
     //update our array of options to reflect the new vote
     $scope.options = Votes.receiveVote(vote.id, $scope.options, vote.addVote);
   });
@@ -104,11 +105,12 @@ angular.module( 'moviematch.selectingOption', [] )
     link: function(scope, ele, attrs) {
       var width = angular.element($window)[0].innerWidth,
           height = 800,
-          data = scope.$parent.options;
+          data = scope.$parent.options,
+          fill = d3.scale.category10(),
           allNodes = null,
           allLabels = null,
           margin = {top: 50, right: 0, bottom: 0, left: 0},
-          maxRadius = 80,
+          maxRadius = 100,
           rScale = d3.scale.sqrt().range([0, maxRadius]),
           rValue = function(d) {return parseInt(d.votes)+1},//To show bubbles, we need count of at least 1
           idValue = function(d) {return d.id},
@@ -144,6 +146,8 @@ angular.module( 'moviematch.selectingOption', [] )
         updateLabels();
       };
 
+      var isPicked = function(d){return scope.$parent.optionsVotedFor.indexOf(d.id) > -1};
+
       var updateNodes = function() {
         allNodes = bubbleGroup.selectAll(".bubble-node").data(data, function(d) {return idValue(d)});
         //Format existing circles
@@ -159,6 +163,11 @@ angular.module( 'moviematch.selectingOption', [] )
                 .call(connectEvents)
                 .append("circle")
                 .attr("r", function(d){return rScale(rValue(d));});
+
+
+        allNodes.selectAll("circle")
+                .style("fill", function(d){return fill(rValue(d))})
+
 
         //if already highlighted, remove highlight, else highlight
         d3.selectAll(".bubble-node").classed("bubble-selected", isPicked);
@@ -250,7 +259,7 @@ angular.module( 'moviematch.selectingOption', [] )
         allNodes.classed("bubble-hover", false);
       };
 
-      var isPicked = function(d){return scope.$parent.optionsVotedFor.indexOf(d.id) > -1};
+      
 
       var click = function(d) {
         scope.$parent.vote(d);
