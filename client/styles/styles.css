@@ -236,7 +236,7 @@ hr {
 
 .bubble-label {
   pointer-events: none; /* When clicked, the click event falls thru to underlying element*/
-  font-family: georgia, "times new roman", times, serif;
+  font-family: 'Cabin', sans-serif;
   color: inherit;
   cursor: pointer;
   display: block;
