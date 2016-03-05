@@ -2,17 +2,15 @@
   <form name="signinForm" class="form-signin" 
     ng-submit='signin()'
     novalidate>
-    <input type="text" class="form-control" value=""
+    <input type="text" class="form-control"
       placeholder="Username"
       name="userInput"
       ng-model='user.username' 
-      ng-class="{'error': signinForm.userInput.$invalid && signinForm.$dirty}"
       required>
-    <input type="password" class="form-control" value=""
+    <input type="password" class="form-control"
       placeholder="Password"
       name="pwdInput"
       ng-model='user.password' 
-      ng-class="{'error': signinForm.pwdInput.$invalid && signinForm.$dirty}"
       required>
     <button class="btn btn-lg btn-primary btn-block btn-success"
       type="submit" >
@@ -21,7 +19,7 @@
     <a class="btn btn-lg btn-primary btn-block" href="#/signup">
         Don't have an account?
     </a>
-    <div class="error-msg" ng-show="error.signinError">
+    <div class="btn-lg btn-danger" ng-show="error.signinError">
       {{ error.signinError }}
     </div>
   </form>
