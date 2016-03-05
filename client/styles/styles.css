@@ -198,45 +198,18 @@ header {
   text-align: center;
 }
 
-#text-select {
-  float:right;
-  margin-right: 10px;
-}
-
-#vis {
-  /*overflow: hidden;*/
-  position: relative;
-}
-
-#status {
-  padding:0 0 20px 20px;
-}
-
-#controls {
-  padding: 20px;
-  background-color: #eee;
-  margin: 10px;
-  width: 350px;
-}
-
-#bubble-background {
-  fill: none;
-  pointer-events: all;
-}
-
-.bubble-node {
-  /* fill: #d1e0f3; */
+/*.bubble-node {
   fill: #DCE9BE;
-}
+}*/
 
 .bubble-hover {
    fill: #b8c7d9;
 }
 
 .bubble-selected {
-  fill: #a8c8ee;  
-  stroke: #6081a3; 
-  stroke-width: 2.5px;
+  /*fill: #a8c8ee;*/
+  stroke: #a8c8ee;
+  stroke-width: 5px;
 }
 
 .active {
