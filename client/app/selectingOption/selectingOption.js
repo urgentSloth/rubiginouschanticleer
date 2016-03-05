@@ -104,13 +104,13 @@ angular.module( 'moviematch.selectingOption', [] )
     },
     link: function(scope, ele, attrs) {
       var width = angular.element($window)[0].innerWidth,
-          height = 800,
+          height = angular.element($window)[0].innerHeight,
           data = scope.$parent.options,
           fill = d3.scale.category10(),
           allNodes = null,
           allLabels = null,
-          margin = {top: 50, right: 0, bottom: 0, left: 0},
-          maxRadius = 100,
+          margin = {top: 0, right: 0, bottom: 0, left: 0},
+          maxRadius = height/12,
           rScale = d3.scale.sqrt().range([0, maxRadius]),
           rValue = function(d) {return parseInt(d.votes)+1},//To show bubbles, we need count of at least 1
           idValue = function(d) {return d.id},
@@ -137,7 +137,7 @@ angular.module( 'moviematch.selectingOption', [] )
                     .on("tick", tick);
 
       var update = function() {
-        maxDomainValue = d3.max(data, function(d) {return rValue(d) + 1;});
+        maxDomainValue = d3.max(data, function(d) {return rValue(d);});
 
         rScale.domain([0, maxDomainValue]); //Sets the bubble sizing scale;
         data.forEach(function(d, i){return d.forceR = Math.max(minCollisionRadius, rScale(rValue(d)))});
@@ -209,7 +209,7 @@ angular.module( 'moviematch.selectingOption', [] )
         allLabels.style("width", function(d) {return d.dx + "px"});
 
         /***************This -100 is not supposed to be needed ***************/
-        allLabels.each(function(d){return d.dy = -90+this.getBoundingClientRect().height});
+        allLabels.each(function(d){return d.dy = -425+this.getBoundingClientRect().height});
       };
 
       var gravity = function(alpha) {
@@ -266,7 +266,6 @@ angular.module( 'moviematch.selectingOption', [] )
         d3.event.preventDefault();
       };
 
-
       var svg = d3.select(ele[0]).selectAll("svg").data([data]);
 
       var svgEnter = svg.enter().append("svg");
@@ -277,6 +276,7 @@ angular.module( 'moviematch.selectingOption', [] )
                      .attr("id", "bubble-nodes")
                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
       labelGroup = d3.select(ele[0]).selectAll("#bubble-labels").data([data])
                                     .enter()
                                     .append("div")
@@ -285,8 +285,11 @@ angular.module( 'moviematch.selectingOption', [] )
       //If window size changes, reposition the bubbles
       $window.onresize = function() {
         width = angular.element($window)[0].innerWidth;
+        height = angular.element($window)[0].innerHeight;
         svg.attr("width", width);
         svg.attr("height", height);
+        maxRadius = height/12,
+        rScale = d3.scale.sqrt().range([0, maxRadius]),
         update();
       };
 
