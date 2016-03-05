@@ -17,28 +17,30 @@ angular.module( 'moviematch.selectingOption', [] )
   });
 
   $scope.vote = function(option){
-    var optionIndex = $scope.optionsVotedFor.indexOf(option.id);
-    var addVote;
-    if(optionIndex > -1){//if already voted for that option, we will remove the vote
-      addVote = false;
-      $scope.optionsVotedFor.splice(optionIndex, 1);
-    } else { // if not we'll add it 
-      if($scope.optionsVotedFor.length < $scope.maxNumVotes){
-        addVote = true;
-        $scope.optionsVotedFor.push(option.id);
-      } else {
-        return false; //Tell D3 not to highlight the bubble
+    if($scope.counter>1){
+      var optionIndex = $scope.optionsVotedFor.indexOf(option.id);
+      var addVote;
+      if(optionIndex > -1){//if already voted for that option, we will remove the vote
+        addVote = false;
+        $scope.optionsVotedFor.splice(optionIndex, 1);
+      } else { // if not we'll add it 
+        if($scope.optionsVotedFor.length < $scope.maxNumVotes){
+          addVote = true;
+          $scope.optionsVotedFor.push(option.id);
+        } else {
+          return false; //Tell D3 not to highlight the bubble
+        }
       }
+
+      voteDate = {
+        sessionName: $scope.session.sessionName, 
+        id: option.id, 
+        addVote: addVote
+      };
+
+      Votes.addVote(voteDate);
+      return true; //Tell D3 to highlight the bubble
     }
-
-    voteDate = {
-      sessionName: $scope.session.sessionName, 
-      id: option.id, 
-      addVote: addVote
-    };
-
-    Votes.addVote(voteDate);
-    return true; //Tell D3 to highlight the bubble
   };
 
   var tallyVotes = function(){
