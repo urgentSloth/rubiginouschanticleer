@@ -1,7 +1,65 @@
-body, html {
-  width: 100%;
-  height: 100%;
+body {
+ background-color:    #303030  ;
+ font-family: 'Cabin', sans-serif;
 }
+
+.logo{
+  color: #fff;
+  font-size: 60px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subheader{
+  font-size: 40px;
+  color: #337ab7;
+  margin: 10px;
+  margin-bottom: 40px;
+}
+.start{
+  text-align: center;
+}
+
+.sessionNames{
+  font-size: 30px;
+  color: #337ab7;
+  text-transform: uppercase;
+  text-align: center;
+
+}
+
+.join{
+  font-size: 30px;
+  margin-left: 150px;
+}
+
+.subsubheader{
+  font-size: 25px;
+  margin: 30px;
+}
+
+/*
+button {
+  margin: 10px;
+}*/
+
+
+.box{
+  background-color: #fff;
+  margin: 50px;
+   width: 90% !important; 
+  padding: 50px;
+  margin-top: 20px;
+  border-radius: 25px;
+  display:inline-block;
+}
+
+.counter{
+  color: #fff;
+  font-size: 80px;
+  text-align: center;  
+}
+
 
 .form-signin {
   max-width: 330px;
@@ -20,9 +78,9 @@ body, html {
 .form-signin .form-control {
   position: relative;
   height: auto;
-  -webkit-box-sizing: border-box;
+  /*-webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
-          box-sizing: border-box;
+          box-sizing: border-box;*/
   padding: 10px;
   font-size: 16px;
 }
@@ -120,11 +178,6 @@ hr {
   margin: 100px 0 50px 0;
 }
 
-.main-nav {
-  height: 35px;
-  background:rgba(0,94,255,0.2);
-}
-
 .app-logo {
   width: 100px;
 }
@@ -139,22 +192,39 @@ hr {
 .main-nav-menu {
   float: right;
   position:relative;
-  margin-top: 4px;
+  /*margin-top: 4px;*/
+  margin-right: 20px !important;
+}
+
+.navButtons{
+  margin-right: 50px !important;
 }
 
 .main-nav-menu-icon {
   width: 25px;
+  color: #fff;
+}
+#navList {
+  width: 25px;
+  font-size: 20px;
+  color: #337ab7;
+  margin: 20px;
+  border-color:#fff solid 1px;
+  border
+
 }
 
-.nav-list {
+/*.nav-list {
   padding-right: 13px;
+  color: #fff;
+
   z-index: 100;
   cursor: pointer;
   position: absolute;
   left: -80px;
   top: 35px;
   background:rgba(0,94,225,0.3);
-}
+}*/
 
 .foto {
   display: block;
