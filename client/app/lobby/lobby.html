@@ -4,45 +4,42 @@ They will press start when everyone has joined -->
 <dst-main-nav></dst-main-nav>
 <div class='box'>
     <div id="match" >
-        <div data-wrapper-for="Grid1" class="container-fluid">
             <div class="row">
                 <div class="col-xs-12">
-                    <h3>
+                    <h3 class='subheader'>
                         Wait for your friends, {{ username }}!
                     </h3>
-                    <p>
-                        Once everyone is here, press &quot;Start&quot;
-                    </p>
                 </div>
             </div>
-        </div>
         <form class="form-inline" role="form">
             <div class="form-group ">
-                <div>
-                  <hr>
-                </div>
-                <h4>
+                <h4 class='subsubheader'>
                     People currently in the room:
                 </h4>
             </div>
-            <div class="users" ng-repeat="user in users">
+            <div class="sessionNames" ng-repeat="user in users">
               <h4>
                   {{ user.username }}
               </h4>
             </div>
         </form>
+        <p class='subsubheader'>
+            Once everyone is here, start the game !
+        </p>
+        <div class='start' >
+            <button class="btn btn-success btn-lg" type="button" ng-click="startSession( session.sessionName )">
+                <span class="ion ion-arrow-right-b" style="color: black;">
+                </span>
+                Start
+            </button>
+        </div>
         <div data-wrapper-for="Grid4" class="container-fluid">
             <div class="row">
+                <div class="col-xs-6">
+                </div>
                 <div class="col-xs-3">
                 </div>
                 <div class="col-xs-6">
-                    <button class="btn btn-success btn-lg" type="button" ng-click="startSession( session.sessionName )">
-                        <span class="ion ion-arrow-right-b" style="color: black;">
-                        </span>
-                        Start
-                    </button>
-                </div>
-                <div class="col-xs-3">
                 </div>
             </div>
         </div>

@@ -14,7 +14,10 @@ body {
   font-size: 40px;
   color: #337ab7;
   margin: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+}
+.start{
+  text-align: center;
 }
 
 .sessionNames{
@@ -30,13 +33,11 @@ body {
   margin-left: 150px;
 }
 
-
-
-#subsubheader{
+.subsubheader{
   font-size: 25px;
-  color: #303030;
   margin: 30px;
 }
+
 /*
 button {
   margin: 10px;
