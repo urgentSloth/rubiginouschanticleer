@@ -10,6 +10,10 @@ angular.module( 'moviematch.selectingOption', [] )
   $scope.maxNumVotes = 3;
 
   Votes.resetPrevNumOptions();
+  //if you navigate away from the page, cancel the timeout
+  $scope.$on('$destroy', function(){
+    $timeout.cancel($scope.countdown);
+  });
 
   Session.getSession()
   .then( function( session ) {
@@ -64,11 +68,11 @@ angular.module( 'moviematch.selectingOption', [] )
   var setTimer = function(seconds){
     $scope.counter = seconds;
     $scope.timer = function(seconds){
-      var countdown = $timeout($scope.timer,1000);
+      $scope.countdown = $timeout($scope.timer,1000);
       $scope.counter -= 1;
       if( $scope.counter === 0 ){
         //when the timer reaches zero, make it stop
-        $timeout.cancel(countdown);
+        $timeout.cancel($scope.countdown);
         tallyVotes();
       }
     }

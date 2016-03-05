@@ -73,8 +73,12 @@ var app = angular.module( 'moviematch', [
   return attach;
 })
 
-.run(function ($rootScope, $location, Auth) {
+.run(function ($rootScope, $location, Auth, Socket, Session) {
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+    Socket.removeAllListeners("voteAdded");
+    if(next.$$route.originalPath === '/sessions'){
+      Session.destroySession();
+    }
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
       $location.path('/signin');
     }

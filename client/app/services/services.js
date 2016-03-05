@@ -93,8 +93,8 @@ angular.module( 'moviematch.services', [] )
       });
     },
 
-    destroySession: function( sessionName ) {
-      $window.localStorage.clear();
+    destroySession: function() {
+      $window.localStorage.removeItem('sessionName');
     }
   }
 })
