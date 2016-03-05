@@ -214,24 +214,11 @@ hr {
 
 }
 
-/*.nav-list {
-  padding-right: 13px;
-  color: #fff;
-
-  z-index: 100;
-  cursor: pointer;
-  position: absolute;
-  left: -80px;
-  top: 35px;
-  background:rgba(0,94,225,0.3);
-}*/
-
 .foto {
   display: block;
   margin: 0 auto;
   width: 100%;
 }
-
 
 /*Styles from D3 implementation*/
 .votePage {
@@ -268,16 +255,11 @@ header {
   text-align: center;
 }
 
-/*.bubble-node {
-  fill: #DCE9BE;
-}*/
-
 .bubble-hover {
    fill: #b8c7d9;
 }
 
 .bubble-selected {
-  /*fill: #a8c8ee;*/
   stroke: #a8c8ee;
   stroke-width: 5px;
 }
