@@ -3,6 +3,9 @@ body, html {
   height: 100%;
 }
 
+body {
+  padding-bottom: 20px;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -12,9 +15,8 @@ body, html {
   margin-bottom: 10px;
 }
 
-.ng-scope {
-  height: 100%;
-  width: 100%;
+.yourSessions {
+  text-align: center;
 }
 
 .form-signin .form-control {
@@ -40,9 +42,14 @@ body, html {
   border-top-right-radius: 0;
 }
 
+.ng-scope {
+  height: 100%;
+  width: 100%;
+}
 
-button:disabled {
-  color: lightgrey;
+a, a:visited {
+  font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
+  font-size: 20px;
 }
 
 .bold {
@@ -169,16 +176,11 @@ hr {
   height: 600px;
 }
 
-a, a:visited {
-  color:#333;
-}
-
 text {
   font: 24px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
   pointer-events: none;
 }
-
 
 #container {
   padding-top:20px;
