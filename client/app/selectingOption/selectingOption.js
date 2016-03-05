@@ -117,8 +117,8 @@ angular.module( 'moviematch.selectingOption', [] )
           fill = d3.scale.category10(),
           allNodes = null,
           allLabels = null,
-          margin = {top: 0, right: 0, bottom: 0, left: 0},
-          maxRadius = height/12,
+          margin = {top: -50, right: 0, bottom: 0, left: 0},
+          maxRadius = height/13,
           rScale = d3.scale.sqrt().range([0, maxRadius]),
           rValue = function(d) {return parseInt(d.votes)+1},//To show bubbles, we need count of at least 1
           idValue = function(d) {return d.id},
@@ -217,7 +217,7 @@ angular.module( 'moviematch.selectingOption', [] )
         allLabels.style("width", function(d) {return d.dx + "px"});
 
         /***************This -100 is not supposed to be needed ***************/
-        allLabels.each(function(d){return d.dy = -425+this.getBoundingClientRect().height});
+        allLabels.each(function(d){return d.dy = -350+this.getBoundingClientRect().height});
       };
 
       var gravity = function(alpha) {
